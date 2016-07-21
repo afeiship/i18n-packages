@@ -1,6 +1,7 @@
 #apache-dev
 Mac local apache dev config
 
+##Support VirtualHost:
 + `e-httpd` 编辑httpd.conf加载vitualhost.conf文件
   - 即去掉这一行注释：#Include /private/etc/apache2/extra/httpd-vhosts.conf
 
@@ -16,3 +17,9 @@ Mac local apache dev config
   </VirtualHost>
   ```
 + 重启apache,`apache-reload`
+
+
+##Support PHP
++ `e-httpd`，去掉这一行，LoadModule php5_module libexec/apache2/libphp5.so
++ 重启apache,`apache-reload`
++ 测试：http://www.apache-dev.com/index.php
