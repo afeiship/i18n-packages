@@ -10,7 +10,7 @@ Mac local apache dev config
     ServerName www.apache-dev.com
     DocumentRoot /Users/feizheng/git-oschina/apache-dev
     <Directory "/Users/feizheng/git-oschina/apache-dev">
-      Options FollowSymLinks
+      Options Indexes FollowSymLinks
       Require all granted
     </Directory>
   </VirtualHost>
