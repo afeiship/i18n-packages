@@ -1,13 +1,14 @@
 declare var wx: any;
 
 interface I18nLanguageDetectOptions {
-  languageKeys?: string[];
+  lookupQuerystring?: string[];
+  languageQueryFn?: () => string;
   cacheNs?: string;
   cacheKey?: string;
 }
 
 const defaults = {
-  languageKeys: ['language', 'lang'],
+  lookupQuerystring: ['language', 'lang'],
   cacheNs: '',
   cacheKey: 'i18next.lang',
 };
@@ -41,8 +42,8 @@ class I18nLanguageDetect {
   }
 
   detect() {
-    const { languageKeys } = this.options;
-    const lang = getLanguage(languageKeys!);
+    const { lookupQuerystring, languageQueryFn } = this.options;
+    const lang = languageQueryFn ? languageQueryFn() : getLanguage(lookupQuerystring!);
     return lang || localStorage.getItem(this.cacheKey) || navigator.language;
   }
 
