@@ -12,6 +12,17 @@ const defaults = {
   cacheKey: 'i18next.lang',
 };
 
+const getLanguage = (keys: string[]) => {
+  const uri = new URL(window.location.href);
+  let lang = null;
+  for (let index = 0; index < keys.length; index++) {
+    const key = keys[index];
+    const lang = uri.searchParams.get(key);
+    if (lang) break;
+  }
+  return lang;
+};
+
 class I18nLanguageDetect {
   public static readonly type = 'languageDetector';
   public options: I18nLanguageDetectOptions;
@@ -30,15 +41,8 @@ class I18nLanguageDetect {
   }
 
   detect() {
-    const url = window.location.href;
-    const uri = new URL(url);
     const { languageKeys } = this.options;
-    let lang = null;
-    for (let index = 0; index < languageKeys!.length; index++) {
-      const key = languageKeys![index];
-      const lang = uri.searchParams.get(key);
-      if (lang) break;
-    }
+    const lang = getLanguage(languageKeys!);
     return lang || localStorage.getItem(this.cacheKey) || navigator.language;
   }
 
