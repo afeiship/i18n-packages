@@ -1,7 +1,7 @@
 {
   "name": "@jswork/react-ant-i18n",
   "homepage": "https://js.work",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "I18n for antd.",
   "license": "MIT",
   "main": "dist/index.js",
@@ -25,11 +25,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
+    "@jswork/i18n-language-detect": "^1.0.3",
     "@jswork/next": "^1.0.9",
     "@jswork/next-replace-in-file": "^1.0.0",
     "@jswork/next-rollup-banner": "^1.0.2",
     "@jswork/react-markdown-props": "^1.0.1",
-    "@jswork/i18n-language-detect": "^1.0.2",
     "@rollup/plugin-node-resolve": "^11.0.1",
     "@rollup/plugin-replace": "^2.3.4",
     "@testing-library/jest-dom": "^5.16.1",
