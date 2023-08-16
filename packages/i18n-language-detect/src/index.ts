@@ -35,7 +35,7 @@ class I18nLanguageDetect {
     return `${ns}@${cacheKey}`;
   }
 
-  constructor(services: any, inOptions: I18nLanguageDetectOptions) {
+  init(services: any, inOptions: I18nLanguageDetectOptions) {
     this.services = services;
     this.options = { ...defaults, ...inOptions };
   }
