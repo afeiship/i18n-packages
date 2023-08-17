@@ -1,5 +1,5 @@
 import typescript from 'rollup-plugin-typescript2';
-import commonjs from 'rollup-plugin-commonjs';
+import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import externals from 'rollup-plugin-node-externals';
 import banner from 'rollup-plugin-banner';
@@ -52,14 +52,7 @@ export default [
         exclude: ['**/__tests__/**', '**/__stories__/**'],
         clean: true
       }),
-      commonjs({
-        include: ['node_modules/**'],
-        namedExports: {
-          'node_modules/react-is/index.js': Object.keys(require('react-is')),
-          'node_modules/react/react.js': ['Children', 'Component', 'PropTypes', 'createElement'],
-          'node_modules/react-dom/index.js': ['render']
-        }
-      })
+      commonjs()
     ]
   }
 ];
