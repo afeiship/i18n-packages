@@ -6,7 +6,7 @@ import { InitOptions as I18nextInitOptions } from 'i18next';
 import { Locale } from 'antd/es/locale-provider';
 import { ConfigProviderProps } from 'antd/es/config-provider';
 import { ReactNode } from 'react';
-import moment from 'moment';
+import * as moment from 'moment';
 import 'moment/locale/zh-cn';
 import { ThirdPartyModule } from './shared';
 
