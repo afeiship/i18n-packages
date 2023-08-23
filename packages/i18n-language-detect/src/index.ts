@@ -3,6 +3,7 @@ declare var wx: any;
 interface I18nLanguageDetectOptions {
   lookupQuerystring?: string[];
   languageQueryFn?: () => string;
+  store?: Storage;
   cacheNs?: string;
   cacheKey?: string;
   routerType?: string;
@@ -10,6 +11,7 @@ interface I18nLanguageDetectOptions {
 
 const defaults = {
   lookupQuerystring: ['language', 'lang'],
+  store: localStorage,
   cacheNs: '',
   cacheKey: 'i18next.lang',
   routerType: 'hash',
@@ -44,15 +46,16 @@ class I18nLanguageDetect {
   }
 
   detect() {
-    const { lookupQuerystring, languageQueryFn } = this.options;
+    const { lookupQuerystring, languageQueryFn, store } = this.options;
     const lang = languageQueryFn
       ? languageQueryFn()
       : getLanguage(lookupQuerystring!, this.options);
-    return lang || localStorage.getItem(this.cacheKey) || navigator.language;
+    return lang || store!.getItem(this.cacheKey) || navigator.language;
   }
 
   cacheUserLanguage(lng: string) {
-    localStorage.setItem(this.cacheKey, lng);
+    const { store } = this.options;
+    store!.setItem(this.cacheKey, lng);
   }
 }
 
