@@ -1,7 +1,7 @@
 {
   "name": "@jswork/react-ant-i18n",
   "homepage": "https://js.work",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "I18n for antd.",
   "license": "MIT",
   "main": "dist/index.js",
@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
-    "@jswork/i18n-language-detect": "^1.0.7",
+    "@jswork/i18n-language-detect": "^1.0.8",
     "@jswork/next": "^1.0.9",
     "@jswork/next-replace-in-file": "^1.0.0",
     "@jswork/next-rollup-banner": "^1.0.2",
