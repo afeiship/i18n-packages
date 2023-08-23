@@ -5,16 +5,20 @@ interface I18nLanguageDetectOptions {
   languageQueryFn?: () => string;
   cacheNs?: string;
   cacheKey?: string;
+  routerType?: string;
 }
 
 const defaults = {
   lookupQuerystring: ['language', 'lang'],
   cacheNs: '',
   cacheKey: 'i18next.lang',
+  routerType: 'hash',
 };
 
-const getLanguage = (keys: string[]) => {
-  const uri = new URL(window.location.href);
+const getLanguage = (keys: string[], inOptions: I18nLanguageDetectOptions) => {
+  const { routerType } = inOptions;
+  const url = routerType === 'hash' ? window.location.hash : window.location.search;
+  const uri = new URL(url, 'http://localhost');
   let lang = null;
   for (let index = 0; index < keys.length; index++) {
     const key = keys[index];
@@ -43,7 +47,9 @@ class I18nLanguageDetect {
 
   detect() {
     const { lookupQuerystring, languageQueryFn } = this.options;
-    const lang = languageQueryFn ? languageQueryFn() : getLanguage(lookupQuerystring!);
+    const lang = languageQueryFn
+      ? languageQueryFn()
+      : getLanguage(lookupQuerystring!, this.options);
     return lang || localStorage.getItem(this.cacheKey) || navigator.language;
   }
 
