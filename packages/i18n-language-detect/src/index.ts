@@ -11,7 +11,7 @@ interface I18nLanguageDetectOptions {
 
 const defaults = {
   lookupQuerystring: ['language', 'lang'],
-  store: localStorage,
+  store: typeof localStorage !== 'undefined' ? localStorage : null,
   cacheNs: '',
   cacheKey: 'i18next.lang',
   routerType: 'hash',
