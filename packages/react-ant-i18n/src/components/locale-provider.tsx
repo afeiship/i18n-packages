@@ -72,7 +72,7 @@ const LocaleProvider = ({
   moment.updateLocale(lowerLocale, null);
 
   // add onInit method
-  onInit!({ i18n, t, lang });
+  onInit!({ i18n, t });
 
   return (
     <ConfigProvider locale={locales![lang]} {...props}>

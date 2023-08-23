@@ -62,7 +62,7 @@ const RawLocaleProvider = ({
   const lang: string = i18n.language as keyof typeof locales;
 
   // add onInit method
-  onInit!({ i18n, t, lang });
+  onInit!({ i18n, t });
 
   return (
     <LocalContext.Provider value={lang} {...props}>
