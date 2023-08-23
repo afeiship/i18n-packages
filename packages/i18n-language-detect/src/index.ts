@@ -9,9 +9,26 @@ interface I18nLanguageDetectOptions {
   routerType?: string;
 }
 
+const MSG = {
+  store_not_available:
+    "i18next-browser-languagedetector: Using memory store. Can't persist language.",
+};
+
+const MemoryStore = {
+  data: {},
+  setItem(key: string, value: string) {
+    console.warn(MSG.store_not_available);
+    this.data[key] = value;
+  },
+  getItem(key: string) {
+    console.warn(MSG.store_not_available);
+    return this.data[key];
+  },
+} as any;
+
 const defaults = {
   lookupQuerystring: ['language', 'lang'],
-  store: typeof localStorage !== 'undefined' ? localStorage : null,
+  store: typeof localStorage !== 'undefined' ? localStorage : MemoryStore,
   cacheNs: '',
   cacheKey: 'i18next.lang',
   routerType: 'hash',
