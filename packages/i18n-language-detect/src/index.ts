@@ -19,10 +19,10 @@ const getLanguage = (keys: string[], inOptions: I18nLanguageDetectOptions) => {
   const { routerType } = inOptions;
   const suburl = routerType === 'hash' ? window.location.hash : window.location.search;
   const uri = new URL(suburl.slice(1), 'http://localhost');
-  let lang = null;
-  for (let index = 0; index < keys.length; index++) {
-    const key = keys[index];
-    const lang = uri.searchParams.get(key);
+  let lang: any = null;
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    lang = uri.searchParams.get(key);
     if (lang) break;
   }
   return lang;
