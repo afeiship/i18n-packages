@@ -68,6 +68,10 @@ const RawLocaleProvider = ({
     onInit!({ i18n, t });
     // onLanguageChanged
     i18n.on('languageChanged', onLanguageChanged!);
+
+    return () => {
+      i18n.off('languageChanged', onLanguageChanged!);
+    };
   }, []);
 
   return (
