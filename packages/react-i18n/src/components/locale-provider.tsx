@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
 import type { i18n as I18n } from 'i18next';
 import { InitOptions as I18nextInitOptions } from 'i18next';
@@ -30,6 +30,7 @@ type LocaleProviderProps = {
   options?: InitOptions;
   plugins?: ThirdPartyModule[];
   onInit?: (opts: any) => void;
+  onLanguageChanged?: (lang: string) => void;
   locales?: {
     [key in string]: any;
   };
@@ -41,7 +42,8 @@ const RawLocaleProvider = ({
   mode,
   options,
   plugins,
-  onInit = (_: OnInitCallbackOptions) => {},
+  onInit,
+  onLanguageChanged,
   ...props
 }: LocaleProviderProps) => {
   if (!initialized) {
@@ -61,8 +63,12 @@ const RawLocaleProvider = ({
   const { i18n, t } = useTranslation();
   const lang: string = i18n.language as keyof typeof locales;
 
-  // add onInit method
-  onInit!({ i18n, t });
+  useEffect(() => {
+    // onInit
+    onInit!({ i18n, t });
+    // onLanguageChanged
+    i18n.on('languageChanged', onLanguageChanged!);
+  }, []);
 
   return (
     <LocalContext.Provider value={lang} {...props}>
@@ -72,7 +78,9 @@ const RawLocaleProvider = ({
 };
 
 RawLocaleProvider.defaultProps = {
-  mode: 'backend'
+  mode: 'backend',
+  onInit: (_: OnInitCallbackOptions) => {},
+  onLanguageChanged: () => {}
 };
 
 export default RawLocaleProvider;

@@ -36,6 +36,9 @@ export const LocaleApp = () => {
           mode="backend"
           options={{ publicURL: '/' }}
           plugins={[LngDetect]}
+          onLanguageChanged={(lang) => {
+            console.log('language changed: ', lang);
+          }}
           onInit={(opts) => {
             console.log('on init opts:', opts);
             // nx.t = opts.t;
