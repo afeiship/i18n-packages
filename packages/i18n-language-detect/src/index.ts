@@ -7,6 +7,8 @@ interface I18nLanguageDetectOptions {
   cacheNs?: string;
   cacheKey?: string;
   routerType?: string;
+  supportedLngs?: string[];
+  fallbackLng?: string;
 }
 
 const MSG = {
@@ -32,6 +34,8 @@ const defaults = {
   cacheNs: '',
   cacheKey: 'i18next.lang',
   routerType: 'hash',
+  supportedLngs: ['zh-CN', 'en-US'],
+  fallbackLng: 'en-US',
 };
 
 const getLanguage = (keys: string[], inOptions: I18nLanguageDetectOptions) => {
@@ -63,11 +67,12 @@ class I18nLanguageDetect {
   }
 
   detect() {
-    const { lookupQuerystring, languageQueryFn, store } = this.options;
+    const { lookupQuerystring, languageQueryFn, store, supportedLngs, fallbackLng } = this.options;
     const lang = languageQueryFn
       ? languageQueryFn()
       : getLanguage(lookupQuerystring!, this.options);
-    return lang || navigator.language || store!.getItem(this.cacheKey);
+    const resLang = lang || navigator.language || store!.getItem(this.cacheKey);
+    return supportedLngs!.includes(resLang!) ? resLang : fallbackLng;
   }
 
   cacheUserLanguage(lng: string) {
