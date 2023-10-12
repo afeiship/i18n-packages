@@ -3,7 +3,7 @@ import i18next, { Module } from 'i18next';
 export interface ThirdPartyModule extends Module {}
 
 export const SHARED_INIT_OPTIONS = {
-  supportedLngs: ['zh-CN', 'en-US'],
+  supportedLngs: ['zh-CN', 'en-US','ru-RU'],
   fallbackLng: 'en-US',
   load: 'currentOnly',
   ns: 'translation',
