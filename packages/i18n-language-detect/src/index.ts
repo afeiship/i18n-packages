@@ -74,7 +74,7 @@ class I18nLanguageDetect {
       ? languageQueryFn()
       : getLanguage(lookupQuerystring!, this.options);
     const resLang = lang || navigator.language || store!.getItem(this.cacheKey);
-    return stdLanuage(resLang!) || fallbackLng;
+    return stdLanuage(resLang!, fallbackLng);
   }
 
   cacheUserLanguage(lng: string) {
