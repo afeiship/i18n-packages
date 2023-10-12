@@ -36,7 +36,7 @@ const defaults = {
   cacheNs: '',
   cacheKey: 'i18next.lang',
   routerType: 'hash',
-  supportedLngs: ['zh-CN', 'en-US', 'ru'],
+  supportedLngs: ['zh-CN', 'en-US', 'ru-RU'],
   fallbackLng: 'en-US',
 };
 
@@ -69,7 +69,7 @@ class I18nLanguageDetect {
   }
 
   detect() {
-    const { lookupQuerystring, languageQueryFn, store, supportedLngs, fallbackLng } = this.options;
+    const { lookupQuerystring, languageQueryFn, store, fallbackLng } = this.options;
     const lang = languageQueryFn
       ? languageQueryFn()
       : getLanguage(lookupQuerystring!, this.options);
