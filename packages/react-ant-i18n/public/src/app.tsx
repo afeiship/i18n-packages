@@ -12,7 +12,8 @@ const Container = styled.div`
 
 const items = [
   { value: 'en-US', label: 'English' },
-  { value: 'zh-CN', label: '中文' }
+  { value: 'zh-CN', label: '中文' },
+  { value: 'ru-RU', label: 'Русский' },
 ];
 
 export default () => {

@@ -22,7 +22,7 @@ export default (
     ...SHARED_INIT_OPTIONS,
     backend: {
       loadPath: `${root}locales/{{lng}}.json`,
-      queryStringParams: { v: version || Date.now() }
+      queryStringParams: { v: version || Date.now() },
     },
     ...initOptions
   };
