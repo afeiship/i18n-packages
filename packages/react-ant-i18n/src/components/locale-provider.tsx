@@ -16,6 +16,7 @@ import init4memory from './mode/init4memory';
 
 import enUS from 'antd/es/locale/en_US';
 import zhCN from 'antd/es/locale/zh_CN';
+import ruRU from 'antd/es/locale/ru_RU';
 
 interface InitOptions extends I18nextInitOptions {
   publicURL?: string;
@@ -27,7 +28,8 @@ interface OnInitCallbackOptions {
   t: TFunction;
 }
 
-const locales = { 'en-US': enUS, 'zh-CN': zhCN };
+const locales = { 'en-US': enUS, 'zh-CN': zhCN, 'ru-RU': ruRU };
+const momentHook = { 'ru-RU': 'ru' };
 let initialized = false;
 
 type INIT_MODE = 'backend' | 'memory' | null;
@@ -67,7 +69,7 @@ const LocaleProvider = ({
 
   const { i18n, t } = useTranslation();
   const lang: string = i18n.language as keyof typeof locales;
-  const lowerLocale = lang.toLowerCase();
+  const lowerLocale = momentHook[lang] || lang.toLowerCase();
 
   moment.updateLocale(lowerLocale, null);
 
