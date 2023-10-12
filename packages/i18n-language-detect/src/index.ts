@@ -1,3 +1,5 @@
+import stdLanuage from './std-language';
+
 declare var wx: any;
 
 interface I18nLanguageDetectOptions {
@@ -34,7 +36,7 @@ const defaults = {
   cacheNs: '',
   cacheKey: 'i18next.lang',
   routerType: 'hash',
-  supportedLngs: ['zh-CN', 'en-US'],
+  supportedLngs: ['zh-CN', 'en-US', 'ru'],
   fallbackLng: 'en-US',
 };
 
@@ -72,7 +74,7 @@ class I18nLanguageDetect {
       ? languageQueryFn()
       : getLanguage(lookupQuerystring!, this.options);
     const resLang = lang || navigator.language || store!.getItem(this.cacheKey);
-    return supportedLngs!.includes(resLang!) ? resLang : fallbackLng;
+    return stdLanuage(resLang!) || fallbackLng;
   }
 
   cacheUserLanguage(lng: string) {
