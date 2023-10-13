@@ -1,3 +1,4 @@
+import { stdLanguage, getLanguage } from '@jswork/i18n-helper';
 declare var wx: any;
 
 interface I18nLanguageDetectOptions {
@@ -38,26 +39,6 @@ const defaults = {
   fallbackLng: 'en-US',
 };
 
-export function stdLanuage(inLaugage: string, inFallbackLng: string = 'en-US') {
-  const language = inLaugage.toLowerCase();
-  if (language.startsWith('en')) return 'en-US';
-  if (language.startsWith('zh')) return 'zh-CN';
-  if (language.startsWith('ru')) return 'ru-RU';
-  return inFallbackLng;
-}
-
-const getLanguage = (keys: string[], inOptions: I18nLanguageDetectOptions) => {
-  const { routerType } = inOptions;
-  const isHashType = routerType === 'hash';
-  const suburl = isHashType ? window.location.hash.slice(1) : window.location.search;
-  const uri = new URL(suburl, 'http://localhost');
-  for (const key of keys) {
-    const lang = uri.searchParams.get(key);
-    if (lang) return lang;
-  }
-  return null;
-};
-
 class I18nLanguageDetect {
   public static readonly type = 'languageDetector';
   public options: I18nLanguageDetectOptions;
@@ -82,7 +63,7 @@ class I18nLanguageDetect {
       ? languageQueryFn()
       : getLanguage(lookupQuerystring!, this.options);
     const resLang = lang || navigator.language || store!.getItem(this.cacheKey);
-    return stdLanuage(resLang!, fallbackLng);
+    return stdLanguage(resLang!, fallbackLng);
   }
 
   cacheUserLanguage(lng: string) {
