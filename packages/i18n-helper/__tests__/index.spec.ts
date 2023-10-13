@@ -1,7 +1,9 @@
-import { stdLanguage, } from '../src';
+import { stdLanguage, getLanguage } from '../src';
 
-describe('api.basic', () => {
+// mock window.location
+// global.window = Object.create(window);
 
+describe('stdLanguage', () => {
   test('language: en', () => {
     expect(stdLanguage('en')).toBe('en-US');
     expect(stdLanguage('en-US')).toBe('en-US');
@@ -26,5 +28,14 @@ describe('api.basic', () => {
     expect(stdLanguage('ru-ru')).toBe('ru-RU');
     expect(stdLanguage('ru-RU')).toBe('ru-RU');
     expect(stdLanguage('ru-ru')).toBe('ru-RU');
+  });
+});
+
+describe.skip('getLanguage', () => {
+  const keys = ['language', 'lang'];
+  test('routerType: browser', () => {
+    const routerType = 'browser';
+    location.href = 'http://localhost?language=en-US';
+    expect(getLanguage(keys, { routerType })).toBe('en-US');
   });
 });

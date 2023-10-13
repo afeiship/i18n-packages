@@ -1,9 +1,11 @@
 // https://jestjs.io/docs/en/configuration
 module.exports = {
   verbose: true,
+  // use jsdom env
+  // testEnvironment: 'jsdom',
+  preset: 'ts-jest',
   testRegex: [/\.spec.ts/],
-  //preset: "jest-puppeteer",
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1'
+    '^@/(.*)$': '<rootDir>/src/$1',
   }
 };

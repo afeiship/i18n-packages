@@ -24,6 +24,8 @@
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
-  "boilerplate": "generator-typescript:tsup",
-  "homepage": "https://js.work"
+  "homepage": "https://js.work",
+  "dependencies": {
+    "ts-jest": "^29.0.0-next.1"
+  }
 }
