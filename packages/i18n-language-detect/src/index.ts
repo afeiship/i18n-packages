@@ -42,8 +42,10 @@ const defaults = {
 
 const getLanguage = (keys: string[], inOptions: I18nLanguageDetectOptions) => {
   const { routerType } = inOptions;
-  const suburl = routerType === 'hash' ? window.location.hash : window.location.search;
-  const uri = new URL(suburl.slice(1), 'http://localhost');
+  const isHashType = routerType === 'hash';
+  const suburl = isHashType ? window.location.hash : window.location.search;
+  const idx = isHashType ? 1 : 0;
+  const uri = new URL(suburl.slice(idx), 'http://localhost');
   for (const key of keys) {
     const lang = uri.searchParams.get(key);
     if (lang) return lang;
