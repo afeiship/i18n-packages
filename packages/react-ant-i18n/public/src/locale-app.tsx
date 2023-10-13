@@ -1,4 +1,5 @@
 import LngDetect from '@jswork/i18n-language-detect';
+import lngDetectLocal from './lng-detect';
 import App from './app';
 import { LocaleProvider } from '../../src/main';
 import React from 'react';
@@ -29,6 +30,7 @@ export const LocaleApp = () => {
       {mode === 'backend' && (
         <LocaleProvider
           mode="backend"
+          routerType="browser"
           options={{ publicURL: '/' }}
           plugins={[LngDetect]}
           onInit={(opts) => {

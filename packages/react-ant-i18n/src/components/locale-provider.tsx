@@ -36,6 +36,7 @@ type INIT_MODE = 'backend' | 'memory' | null;
 type LocaleProviderProps = {
   children: ReactNode;
   mode?: INIT_MODE;
+  routerType?: 'hash' | 'browser';
   options?: InitOptions;
   plugins?: ThirdPartyModule[];
   onInit?: (opts: any) => void;
@@ -48,18 +49,24 @@ const LocaleProvider = ({
   children,
   locales,
   mode,
+  routerType,
   options,
   plugins,
   onInit = (_: OnInitCallbackOptions) => {},
   ...props
 }: LocaleProviderProps) => {
+  const computedOptions = {
+    routerType,
+    ...options
+  };
+
   if (!initialized) {
     switch (mode) {
       case 'backend':
-        init4backend(options, plugins);
+        init4backend(computedOptions, plugins);
         break;
       case 'memory':
-        init4memory(options, plugins);
+        init4memory(computedOptions, plugins);
         break;
       default:
         console.warn('[LocaleProvider] You need init i18next first!');

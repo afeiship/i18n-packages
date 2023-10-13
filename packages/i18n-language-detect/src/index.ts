@@ -1,4 +1,4 @@
-import stdLanuage from './std-language';
+// import stdLanuage from './std-language';
 
 declare var wx: any;
 
@@ -43,15 +43,22 @@ const defaults = {
 const getLanguage = (keys: string[], inOptions: I18nLanguageDetectOptions) => {
   const { routerType } = inOptions;
   const isHashType = routerType === 'hash';
-  const suburl = isHashType ? window.location.hash : window.location.search;
-  const idx = isHashType ? 1 : 0;
-  const uri = new URL(suburl.slice(idx), 'http://localhost');
+  const suburl = isHashType ? window.location.hash.slice(1) : window.location.search;
+  const uri = new URL(suburl, 'http://localhost');
   for (const key of keys) {
     const lang = uri.searchParams.get(key);
     if (lang) return lang;
   }
   return null;
 };
+
+function stdLanuage(inLaugage: string, inFallbackLng: string = 'en-US') {
+  const language = inLaugage.toLowerCase();
+  if (language.startsWith('en')) return 'en-US';
+  if (language.startsWith('zh')) return 'zh-CN';
+  if (language.startsWith('ru')) return 'ru-RU';
+  return inFallbackLng;
+}
 
 class I18nLanguageDetect {
   public static readonly type = 'languageDetector';
@@ -65,9 +72,10 @@ class I18nLanguageDetect {
     return `${ns}@${cacheKey}`;
   }
 
-  init(services: any, inOptions: I18nLanguageDetectOptions) {
+  init(services: any) {
+    const opts = services.languageUtils.options;
     this.services = services;
-    this.options = { ...defaults, ...inOptions };
+    this.options = { ...defaults, ...opts };
   }
 
   detect() {
