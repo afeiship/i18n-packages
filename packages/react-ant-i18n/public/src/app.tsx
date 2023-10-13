@@ -13,8 +13,14 @@ const Container = styled.div`
 const items = [
   { value: 'en-US', label: 'English' },
   { value: 'zh-CN', label: '中文' },
-  { value: 'ru-RU', label: 'Русский' },
+  { value: 'ru-RU', label: 'Русский' }
 ];
+
+const imgHook = {
+  'zh-CN': '5',
+  'en-US': '1',
+  'ru-RU': '6'
+};
 
 export default () => {
   const { t, i18n } = useIntl();
@@ -24,7 +30,7 @@ export default () => {
   nx.t = t;
   nx.i18n = i18n;
 
-  const img = i18n.language === 'zh-CN' ? '5' : '1';
+  const img = imgHook[i18n.language];
 
   return (
     <Container>
