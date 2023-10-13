@@ -1,8 +1,4 @@
-interface I18nOptions {
-  routerType: 'hash' | 'browser';
-}
-
-export default function getLanguage(keys: string[], inOptions?: I18nOptions) {
+export default function getLanguage(keys: string[], inOptions?) {
   const { routerType } = inOptions || {};
   const isHashType = routerType === 'hash';
   const suburl = isHashType ? window.location.hash.slice(1) : window.location.search;
