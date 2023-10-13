@@ -43,6 +43,10 @@ class I18nLanguageDetect {
   public options: I18nLanguageDetectOptions;
   public services: any;
 
+  constructor(options?: I18nLanguageDetectOptions) {
+    this.options = { ...defaults, ...options };
+  }
+
   get cacheKey() {
     const { cacheNs, cacheKey } = this.options;
     const { host } = window.location;
