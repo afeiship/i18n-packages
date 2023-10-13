@@ -1,7 +1,7 @@
 {
-  "name": "@jswork/i18n-language-detect",
-  "version": "1.0.14",
-  "description": "Language detect plugin.",
+  "name": "@jswork/i18n-helper",
+  "version": "1.0.0",
+  "description": "I18n helper.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",
