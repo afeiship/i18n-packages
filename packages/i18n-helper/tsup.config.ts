@@ -5,4 +5,5 @@ export default defineConfig({
   format: ['cjs', 'esm', 'iife'],
   globalName: 'i18nHelper',
   dts: true,
+  sourcemap: true
 });
