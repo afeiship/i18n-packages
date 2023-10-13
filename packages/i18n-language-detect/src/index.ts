@@ -40,12 +40,8 @@ const defaults = {
 
 class I18nLanguageDetect {
   public static readonly type = 'languageDetector';
-  public options: I18nLanguageDetectOptions;
+  public options: I18nLanguageDetectOptions = { ...defaults };
   public services: any;
-
-  constructor(options?: I18nLanguageDetectOptions) {
-    this.options = { ...defaults, ...options };
-  }
 
   get cacheKey() {
     const { cacheNs, cacheKey } = this.options;
