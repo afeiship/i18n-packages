@@ -1,5 +1,4 @@
 import { stdLanguage, getLanguage } from '@jswork/i18n-helper';
-declare var wx: any;
 
 interface I18nLanguageDetectOptions {
   lookupQuerystring?: string[];
@@ -70,11 +69,6 @@ class I18nLanguageDetect {
     const { store } = this.options;
     store!.setItem(this.cacheKey, lng);
   }
-}
-
-// for commonjs es5 require
-if (typeof module !== 'undefined' && module.exports && typeof wx === 'undefined') {
-  module.exports = I18nLanguageDetect;
 }
 
 export default I18nLanguageDetect;
