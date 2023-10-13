@@ -1,6 +1,6 @@
 {
   "name": "@jswork/i18n-language-detect",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "Language detect plugin.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
