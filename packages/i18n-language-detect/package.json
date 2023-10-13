@@ -51,5 +51,8 @@
       ],
       "@babel/preset-typescript"
     ]
+  },
+  "dependencies": {
+    "@jswork/i18n-helper": "^1.0.1"
   }
 }

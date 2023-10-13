@@ -1,5 +1,9 @@
-export default function getLanguage(keys: string[], inOptions) {
-  const { routerType } = inOptions;
+interface I18nOptions {
+  routerType: 'hash' | 'browser';
+}
+
+export default function getLanguage(keys: string[], inOptions?: I18nOptions) {
+  const { routerType } = inOptions || {};
   const isHashType = routerType === 'hash';
   const suburl = isHashType ? window.location.hash.slice(1) : window.location.search;
   const uri = new URL(suburl, 'http://localhost');
