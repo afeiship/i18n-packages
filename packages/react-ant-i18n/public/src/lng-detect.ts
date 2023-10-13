@@ -1,15 +1,15 @@
 import Cookies from 'js-cookie';
 
-export default class {
+class LanguageDetector {
   public static readonly type = 'languageDetector';
+  public options: any;
 
-  init(s, opts) {
-    console.log('all opts: ', s.languageUtils.options);
+  init(s, _, allopts) {
+    this.options = allopts[LanguageDetector.type];
+    console.log('all opts: ', this.options);
   }
 
   detect(s, opts) {
-    console.log('opts:', opts);
-
     return Cookies.get('lang') || localStorage.getItem('i18next.lang');
   }
 
@@ -17,3 +17,5 @@ export default class {
     localStorage.setItem('i18next.lang', lng);
   }
 }
+
+export default LanguageDetector;

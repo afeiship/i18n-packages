@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ConfigProvider } from 'antd';
 import { TFunction, useTranslation } from 'react-i18next';
 import type { i18n as I18n } from 'i18next';
@@ -40,6 +40,7 @@ type LocaleProviderProps = {
   options?: InitOptions;
   plugins?: ThirdPartyModule[];
   onInit?: (opts: any) => void;
+  onLanguageChanged?: (lang: string) => void;
   locales?: {
     [key in string]: Locale;
   };
@@ -52,13 +53,11 @@ const LocaleProvider = ({
   routerType,
   options,
   plugins,
-  onInit = (_: OnInitCallbackOptions) => {},
+  onInit,
+  onLanguageChanged,
   ...props
 }: LocaleProviderProps) => {
-  const computedOptions = {
-    routerType,
-    ...options
-  };
+  const computedOptions = { routerType, ...options };
 
   if (!initialized) {
     switch (mode) {
@@ -80,8 +79,16 @@ const LocaleProvider = ({
 
   moment.updateLocale(lowerLocale, null);
 
-  // add onInit method
-  onInit!({ i18n, t });
+  useEffect(() => {
+    // onInit
+    onInit!({ i18n, t });
+    // onLanguageChanged
+    i18n.on('languageChanged', onLanguageChanged!);
+
+    return () => {
+      i18n.off('languageChanged', onLanguageChanged!);
+    };
+  }, []);
 
   return (
     <ConfigProvider locale={locales![lang]} {...props}>
@@ -91,8 +98,10 @@ const LocaleProvider = ({
 };
 
 LocaleProvider.defaultProps = {
+  mode: 'backend',
   locales,
-  mode: 'backend'
+  onInit: (_: OnInitCallbackOptions) => {},
+  onLanguageChanged: () => {}
 };
 
 export default LocaleProvider;

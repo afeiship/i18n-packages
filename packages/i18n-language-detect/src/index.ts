@@ -1,5 +1,3 @@
-// import stdLanuage from './std-language';
-
 declare var wx: any;
 
 interface I18nLanguageDetectOptions {
@@ -40,6 +38,14 @@ const defaults = {
   fallbackLng: 'en-US',
 };
 
+export function stdLanuage(inLaugage: string, inFallbackLng: string = 'en-US') {
+  const language = inLaugage.toLowerCase();
+  if (language.startsWith('en')) return 'en-US';
+  if (language.startsWith('zh')) return 'zh-CN';
+  if (language.startsWith('ru')) return 'ru-RU';
+  return inFallbackLng;
+}
+
 const getLanguage = (keys: string[], inOptions: I18nLanguageDetectOptions) => {
   const { routerType } = inOptions;
   const isHashType = routerType === 'hash';
@@ -51,14 +57,6 @@ const getLanguage = (keys: string[], inOptions: I18nLanguageDetectOptions) => {
   }
   return null;
 };
-
-function stdLanuage(inLaugage: string, inFallbackLng: string = 'en-US') {
-  const language = inLaugage.toLowerCase();
-  if (language.startsWith('en')) return 'en-US';
-  if (language.startsWith('zh')) return 'zh-CN';
-  if (language.startsWith('ru')) return 'ru-RU';
-  return inFallbackLng;
-}
 
 class I18nLanguageDetect {
   public static readonly type = 'languageDetector';
