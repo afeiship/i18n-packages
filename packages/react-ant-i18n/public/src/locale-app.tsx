@@ -34,6 +34,7 @@ export const LocaleApp = () => {
           options={{ publicURL: '/' }}
           plugins={[LngDetect]}
           onInit={(opts) => {
+            nx.mix(nx, opts);
             console.log('on init opts:', opts);
             // nx.t = opts.t;
           }}>

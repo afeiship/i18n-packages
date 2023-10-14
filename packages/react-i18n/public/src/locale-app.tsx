@@ -40,6 +40,7 @@ export const LocaleApp = () => {
             console.log('language changed: ', lang);
           }}
           onInit={(opts) => {
+            nx.mix(nx, opts);
             console.log('on init opts:', opts);
             // nx.t = opts.t;
           }}>

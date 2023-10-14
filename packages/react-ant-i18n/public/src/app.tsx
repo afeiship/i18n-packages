@@ -27,10 +27,10 @@ export default () => {
   const [visible, setVisible] = useState<boolean>(false);
 
   // inject as global for debug
-  nx.t = t;
-  nx.i18n = i18n;
+  // nx.t = t;
+  // nx.i18n = i18n;
 
-  const img = imgHook[i18n.language];
+  const img = imgHook[nx.i18n.language];
 
   return (
     <Container>
@@ -39,17 +39,17 @@ export default () => {
           <Space>
             <Avatar src={`https://randomuser.me/api/portraits/lego/${img}.jpg`} size={120} />
             <Select
-              value={i18n.language}
+              value={nx.i18n.language}
               style={{ width: 120 }}
-              onChange={(value) => i18n.changeLanguage(value)}
+              onChange={(value) => nx.i18n.changeLanguage(value)}
               options={items}
             />
           </Space>
           <Space direction="vertical">
-            <h1 style={{ color: '#fff' }}>{t('key')}</h1>
+            <h1 style={{ color: '#fff' }}>{nx.t('key')}</h1>
             <p
               dangerouslySetInnerHTML={{
-                __html: t('desc', { interpolation: { escapeValue: false } })
+                __html: nx.t('desc', { interpolation: { escapeValue: false } })
               }}
             />
             <Table style={{ width: 600 }} dataSource={[]} />
@@ -58,14 +58,14 @@ export default () => {
               <DatePicker />
               <TimePicker />
               <Button type="primary" onClick={() => setVisible(true)}>
-                {t('open-a-modal')}
+                {nx.t('open-a-modal')}
               </Button>
             </Space>
           </Space>
         </header>
 
         <Modal open={visible} onOk={() => setVisible(false)} onCancel={() => setVisible(false)}>
-          {t('mtxt')}
+          {nx.t('mtxt')}
         </Modal>
       </div>
     </Container>

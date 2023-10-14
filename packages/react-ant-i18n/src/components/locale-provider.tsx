@@ -26,6 +26,13 @@ interface OnInitCallbackOptions {
   t: TFunction;
 }
 
+// @ts-ignore
+interface NxStatic {
+  t: TFunction;
+  i18n: I18n;
+  $useIntl: typeof useTranslation;
+}
+
 const locales = { 'en-US': enUS, 'zh-CN': zhCN, 'ru-RU': ruRU };
 const momentHook = { 'ru-RU': 'ru' };
 
@@ -36,6 +43,7 @@ type LocaleProviderProps = {
   moment?: any;
   children: ReactNode;
   mode?: INIT_MODE;
+  harmony?: boolean;
   routerType?: 'hash' | 'browser';
   options?: InitOptions;
   plugins?: ThirdPartyModule[];
@@ -50,6 +58,7 @@ const LocaleProvider = ({
   children,
   locales,
   mode,
+  harmony,
   moment,
   routerType,
   options,
@@ -77,6 +86,12 @@ const LocaleProvider = ({
   const { i18n, t } = useTranslation();
   const lang: string = i18n.language as keyof typeof locales;
   const lowerLocale = momentHook[lang] || lang.toLowerCase();
+  const ctx = global['nx'];
+
+  if (harmony && ctx) {
+    ctx.mix(ctx, { t, i18n });
+    ctx.$useIntl = useTranslation;
+  }
 
   // Only low version antd need this
   moment?.updateLocale(lowerLocale, null);
@@ -104,6 +119,7 @@ LocaleProvider.defaultProps = {
   mode: 'backend',
   moment: null,
   locales,
+  harmony: false,
   onInit: (_: OnInitCallbackOptions) => {},
   onLanguageChanged: () => {}
 };
