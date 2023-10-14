@@ -1,12 +1,14 @@
 {
   "name": "@jswork/react-ant-i18n",
   "homepage": "https://js.work",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "I18n for antd.",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/main.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "cypress:open": "cypress open",
@@ -91,5 +93,12 @@
     "type": "git",
     "url": "https://github.com/afeiship/boilerplate-react-ts-component.git"
   },
-  "keywords": ["react", "ant", "i18n", "moment", "provider", "i8next"]
+  "keywords": [
+    "react",
+    "ant",
+    "i18n",
+    "moment",
+    "provider",
+    "i8next"
+  ]
 }
