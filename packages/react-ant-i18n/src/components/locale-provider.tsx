@@ -22,15 +22,7 @@ interface InitOptions extends I18nextInitOptions {
 
 interface OnInitCallbackOptions {
   i18n: I18n;
-  lang: string;
   t: TFunction;
-}
-
-// @ts-ignore
-interface NxStatic {
-  t: TFunction;
-  i18n: I18n;
-  $useIntl: typeof useTranslation;
 }
 
 const locales = { 'en-US': enUS, 'zh-CN': zhCN, 'ru-RU': ruRU };
