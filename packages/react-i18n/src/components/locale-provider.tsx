@@ -66,9 +66,10 @@ const RawLocaleProvider = ({
   const { i18n, t } = useTranslation();
   const lang: string = i18n.language as keyof typeof locales;
 
+  // onInit
+  onInit!({ i18n, t });
+
   useEffect(() => {
-    // onInit
-    onInit!({ i18n, t });
     // onLanguageChanged
     i18n.on('languageChanged', onLanguageChanged!);
 

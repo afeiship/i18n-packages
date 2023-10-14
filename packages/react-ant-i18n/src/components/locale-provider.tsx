@@ -81,9 +81,10 @@ const LocaleProvider = ({
   // Only low version antd need this
   moment?.updateLocale(lowerLocale, null);
 
+  // onInit
+  onInit!({ i18n, t });
+
   useEffect(() => {
-    // onInit
-    onInit!({ i18n, t });
     // onLanguageChanged
     i18n.on('languageChanged', onLanguageChanged!);
 
