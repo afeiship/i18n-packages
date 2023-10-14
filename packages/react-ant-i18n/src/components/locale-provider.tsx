@@ -6,8 +6,6 @@ import { InitOptions as I18nextInitOptions } from 'i18next';
 import { Locale } from 'antd/es/locale-provider';
 import { ConfigProviderProps } from 'antd/es/config-provider';
 import { ReactNode } from 'react';
-import moment from 'moment';
-import 'moment/locale/zh-cn';
 import { ThirdPartyModule } from './shared';
 
 // modes
@@ -30,10 +28,12 @@ interface OnInitCallbackOptions {
 
 const locales = { 'en-US': enUS, 'zh-CN': zhCN, 'ru-RU': ruRU };
 const momentHook = { 'ru-RU': 'ru' };
+
 let initialized = false;
 
 type INIT_MODE = 'backend' | 'memory' | null;
 type LocaleProviderProps = {
+  moment?: any;
   children: ReactNode;
   mode?: INIT_MODE;
   routerType?: 'hash' | 'browser';
@@ -50,6 +50,7 @@ const LocaleProvider = ({
   children,
   locales,
   mode,
+  moment,
   routerType,
   options,
   plugins,
@@ -77,7 +78,8 @@ const LocaleProvider = ({
   const lang: string = i18n.language as keyof typeof locales;
   const lowerLocale = momentHook[lang] || lang.toLowerCase();
 
-  moment.updateLocale(lowerLocale, null);
+  // Only low version antd need this
+  moment?.updateLocale(lowerLocale, null);
 
   useEffect(() => {
     // onInit
@@ -99,6 +101,7 @@ const LocaleProvider = ({
 
 LocaleProvider.defaultProps = {
   mode: 'backend',
+  moment: null,
   locales,
   onInit: (_: OnInitCallbackOptions) => {},
   onLanguageChanged: () => {}
