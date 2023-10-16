@@ -15,7 +15,6 @@ npm install @jswork/i18n-helper
 ```js
 import i18nHelper from '@jswork/i18n-helper';
 
-// usage goes here.
 ```
 
 ## license

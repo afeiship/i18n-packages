@@ -57,10 +57,8 @@ class I18nLanguageDetect {
   }
 
   detect() {
-    const { lookupQuerystring, languageQueryFn, store, fallbackLng } = this.options;
-    const lang = languageQueryFn
-      ? languageQueryFn()
-      : getLanguage(lookupQuerystring!, this.options);
+    const { lookupQuerystring, languageQueryFn, store, fallbackLng, routerType } = this.options;
+    const lang = languageQueryFn ? languageQueryFn() : getLanguage(routerType!, lookupQuerystring!);
     const resLang = lang || navigator.language || store!.getItem(this.cacheKey);
     return stdLanguage(resLang!, fallbackLng);
   }
