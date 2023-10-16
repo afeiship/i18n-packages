@@ -36,6 +36,6 @@ describe.skip('getLanguage', () => {
   test('routerType: browser', () => {
     const routerType = 'browser';
     location.href = 'http://localhost?language=en-US';
-    expect(getLanguage(keys, { routerType })).toBe('en-US');
+    expect(getLanguage(routerType, keys)).toBe('en-US');
   });
 });
