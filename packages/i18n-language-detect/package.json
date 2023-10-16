@@ -4,7 +4,6 @@
   "description": "Language detect plugin.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
-  "browser": "dist/index.global.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "build": "tsup",
