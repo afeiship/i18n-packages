@@ -40,7 +40,7 @@ const defaults = {
 
 class I18nLanguageDetect {
   public static readonly type = 'languageDetector';
-  public options: I18nLanguageDetectOptions = { ...defaults };
+  public options: I18nLanguageDetectOptions = Object.assign({}, defaults);
   public services: any;
 
   get cacheKey() {
@@ -53,7 +53,7 @@ class I18nLanguageDetect {
   init(services: any) {
     const opts = services.languageUtils.options;
     this.services = services;
-    this.options = { ...defaults, ...opts };
+    this.options = Object.assign({}, defaults, opts);
   }
 
   detect() {

@@ -87,6 +87,7 @@ const RawLocaleProvider = ({
 
 RawLocaleProvider.defaultProps = {
   mode: 'backend',
+  routerType: 'hash',
   onInit: (_: OnInitCallbackOptions) => {},
   onLanguageChanged: () => {}
 };
