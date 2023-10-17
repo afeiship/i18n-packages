@@ -1,4 +1,6 @@
 export default function getLanguage(inRouterType: string, inKeys?: string[]) {
+  if (typeof inRouterType !== 'string') throw new Error('inRouterType must be a string');
+
   const isHashType = inRouterType === 'hash';
   const keys = inKeys || ['language', 'lang'];
   const suburl = isHashType ? window.location.hash.slice(1) : window.location.search;
