@@ -111,6 +111,7 @@ LocaleProvider.defaultProps = {
   mode: 'backend',
   moment: null,
   locales,
+  routerType: 'hash',
   harmony: false,
   onInit: (_: OnInitCallbackOptions) => {},
   onLanguageChanged: () => {}
