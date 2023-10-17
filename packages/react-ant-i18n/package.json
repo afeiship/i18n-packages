@@ -25,7 +25,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
-    "@jswork/i18n-language-detect": "^1.0.27",
     "@jswork/next": "^1.0.9",
     "@jswork/next-replace-in-file": "^1.0.0",
     "@jswork/next-rollup-banner": "^1.0.2",
