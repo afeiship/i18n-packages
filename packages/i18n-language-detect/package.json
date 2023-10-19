@@ -1,6 +1,6 @@
 {
   "name": "@jswork/i18n-language-detect",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "description": "Language detect plugin.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -26,6 +26,6 @@
   },
   "homepage": "https://js.work",
   "dependencies": {
-    "@jswork/i18n-helper": "^1.0.10"
+    "@jswork/i18n-helper": "^1.0.11"
   }
 }
