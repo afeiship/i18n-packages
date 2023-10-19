@@ -3,7 +3,7 @@
   "version": "1.0.10",
   "description": "I18n helper.",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "build": "tsup",
