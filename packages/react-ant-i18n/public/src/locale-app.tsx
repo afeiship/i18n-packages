@@ -1,5 +1,5 @@
 import LngDetect from '@jswork/i18n-language-detect';
-import lngDetectLocal from './lng-detect';
+// import lngDetectLocal from './lng-detect';
 import App from './app';
 import { LocaleProvider } from '../../src/main';
 import React from 'react';
