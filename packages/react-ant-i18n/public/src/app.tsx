@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useIntl } from '../../src/main';
+// import { useIntl } from '../../src/main';
 import styled from 'styled-components';
 import { Select, Space, Table, DatePicker, TimePicker, Avatar, Button, Modal } from 'antd';
 import nx from '@jswork/next';
@@ -23,7 +23,7 @@ const imgHook = {
 };
 
 export default () => {
-  const { t, i18n } = useIntl();
+  // const { t, i18n } = useIntl();
   const [visible, setVisible] = useState<boolean>(false);
 
   // inject as global for debug
