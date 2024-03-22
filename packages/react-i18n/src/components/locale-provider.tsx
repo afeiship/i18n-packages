@@ -73,8 +73,7 @@ const RawLocaleProvider = ({
   onInit!({ i18n, t });
 
   if (harmony && ctx) {
-    ctx.mix(ctx, { t, i18n });
-    ctx.$useIntl = useTranslation;
+    ctx.mix(ctx, { t, i18n, useIntl: useTranslation });
   }
 
   useEffect(() => {
