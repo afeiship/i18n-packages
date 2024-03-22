@@ -75,13 +75,14 @@ const LocaleProvider = ({
     initialized = true;
   }
 
+  // @ts-ignore
   const { i18n, t } = useTranslation();
   const lang: string = i18n.language as keyof typeof locales;
   const lowerLocale = momentHook[lang] || lang.toLowerCase();
-  const ctx = global['nx'];
+  const ctx:any = typeof nx !== 'undefined' ? nx: null;
 
   if (harmony && ctx) {
-    ctx.mix(ctx, { t, i18n });
+    ctx?.mix(ctx, { t, i18n });
     ctx.$useIntl = useTranslation;
   }
 

@@ -28,6 +28,7 @@ type LocaleProviderProps = {
   children: ReactNode;
   mode?: INIT_MODE;
   routerType?: 'hash' | 'browser';
+  harmony?: boolean;
   options?: InitOptions;
   plugins?: ThirdPartyModule[];
   onInit?: (opts: any) => void;
@@ -42,6 +43,7 @@ const RawLocaleProvider = ({
   locales,
   mode,
   routerType,
+  harmony,
   options,
   plugins,
   onInit,
@@ -65,9 +67,15 @@ const RawLocaleProvider = ({
 
   const { i18n, t } = useTranslation();
   const lang: string = i18n.language as keyof typeof locales;
+  const ctx = global['nx'];
 
   // onInit
   onInit!({ i18n, t });
+
+  if (harmony && ctx) {
+    ctx.mix(ctx, { t, i18n });
+    ctx.$useIntl = useTranslation;
+  }
 
   useEffect(() => {
     // onLanguageChanged
