@@ -1,7 +1,7 @@
 {
   "name": "@jswork/react-i18n",
   "homepage": "https://js.work",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "I18n for react project.",
   "license": "MIT",
   "main": "dist/index.js",
