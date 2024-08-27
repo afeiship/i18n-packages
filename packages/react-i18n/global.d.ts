@@ -1,3 +1,4 @@
+// import('i18next').TFunction
 type TFunction = (key: string, options?: any) => string;
 
 interface NxStatic {
