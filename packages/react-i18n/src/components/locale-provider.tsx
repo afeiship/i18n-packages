@@ -13,6 +13,7 @@ const LocalContext = React.createContext({});
 
 interface InitOptions extends I18nextInitOptions {
   publicURL?: string;
+  version?: string;
 }
 
 interface OnInitCallbackOptions {
