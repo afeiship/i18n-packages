@@ -1,14 +1,6 @@
 {
   "name": "i18n-packages",
   "private": true,
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
-  },
-  "devDependencies": {
-    "lerna": "^3.22.1"
-  },
   "scripts": {
     "start": "yarn --cwd packages/websites start",
     "lerna:clean": "lerna clean",
