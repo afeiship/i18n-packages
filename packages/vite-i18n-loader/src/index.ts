@@ -14,6 +14,12 @@ const defaults: Options = {
   localeFile: 'locale.yml',
 };
 
+// /Users/ap7/aric-notes/i18next-notes/src/components/abc-comp/locale.yml -> 'components.abc-comp'
+const getId = (filePath: string) => {
+  const id = filePath.replace(path.resolve('src'), '').replace(path.extname(filePath), '');
+  return id.replace(/\/|\\/g, '.');
+};
+
 export default (inOptions?: Options) => {
   const { dest, localeFile } = { ...defaults, ...inOptions };
 
@@ -21,10 +27,11 @@ export default (inOptions?: Options) => {
     name: 'vite-i18n-loader',
     handleHotUpdate: async ({ file, server }) => {
       if (file.endsWith(localeFile)) {
-        const MSG_INVALID_LOCALE_FILE = `[vite-i18n-loader] Invalid locale file: ${file}, id and languages are required.`;
+        const MSG_INVALID_LOCALE_FILE = `[vite-i18n-loader] Invalid locale file: ${file}, languages not found.`;
         const fileContent = yaml.load(await fs.readFile(file));
-        const { id, languages } = fileContent;
-        if (!id || !languages) return console.warn(MSG_INVALID_LOCALE_FILE);
+        let { id, languages } = fileContent;
+        id = id || getId(file);
+        if (!languages) return console.warn(MSG_INVALID_LOCALE_FILE);
 
         nx.forIn(languages, async (lang, value) => {
           const outputFilePath = path.resolve(dest!, `${lang}.json`);
