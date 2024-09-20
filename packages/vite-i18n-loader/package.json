@@ -4,28 +4,23 @@
   "description": "Another vite i18n loader.",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
-  "browser": "./dist/index.umd.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
+    "src",
     "global.d.ts"
   ],
   "scripts": {
     "build": "tsup",
-    "postbuild": "rollup -c rollup.config.mjs",
     "test": "bun test",
     "release": "release-it"
   },
   "license": "MIT",
   "devDependencies": {
     "@jswork/next": "^1.2.6",
-    "@jswork/rollup-banner": "^1.0.1",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-typescript": "^11.1.6",
     "@swc/core": "^1.3.101",
     "@types/jest": "^29.5.12",
     "@types/node": "^18.15.5",
-    "rollup": "^4.9.6",
     "tslib": "^2.6.2",
     "tsup": "^8.0.1",
     "typescript": "^4.9.5"
