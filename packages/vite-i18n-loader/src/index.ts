@@ -16,8 +16,9 @@ const defaults: Options = {
 
 // /Users/ap7/aric-notes/i18next-notes/src/components/abc-comp/locale.yml -> 'components.abc-comp'
 const getId = (filePath: string) => {
-  const id = filePath.replace(path.resolve('src'), '').replace(path.extname(filePath), '');
-  return id.replace(/\/|\\/g, '.');
+  const parentDir = path.dirname(filePath);
+  const [_, idpath] = parentDir.split('/src/');
+  return idpath.replace('/', '.');
 };
 
 export default (inOptions?: Options) => {
