@@ -3,6 +3,7 @@ import deepmerge from 'deepmerge';
 import yaml from 'js-yaml';
 import path from 'path';
 import nx from '@jswork/next';
+import { getFileId } from './utils';
 
 interface Options {
   dest?: string;
@@ -14,13 +15,6 @@ const defaults: Options = {
   localeFile: 'locale.yml',
 };
 
-// /Users/ap7/aric-notes/i18next-notes/src/components/abc-comp/locale.yml -> 'components.abc-comp'
-const getId = (filePath: string) => {
-  const parentDir = path.dirname(filePath);
-  const [_, idpath] = parentDir.split('/src/');
-  return idpath.replace('/', '.');
-};
-
 export default (inOptions?: Options) => {
   const { dest, localeFile } = { ...defaults, ...inOptions };
 
@@ -29,9 +23,9 @@ export default (inOptions?: Options) => {
     handleHotUpdate: async ({ file, server }) => {
       if (file.endsWith(localeFile)) {
         const MSG_INVALID_LOCALE_FILE = `[vite-i18n-loader] Invalid locale file: ${file}, languages not found.`;
-        const fileContent = yaml.load(await fs.readFile(file));
+        const fileContent: any = yaml.load(await fs.readFile(file, 'utf8'));
         let { id, languages } = fileContent;
-        id = id || getId(file);
+        id = id || getFileId(file);
         if (!languages) return console.warn(MSG_INVALID_LOCALE_FILE);
 
         nx.forIn(languages, async (lang, value) => {
