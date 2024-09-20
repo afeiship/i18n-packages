@@ -1,6 +1,6 @@
 {
   "name": "@jswork/vite-i18n-loader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Another vite i18n loader.",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
@@ -32,5 +32,13 @@
   "dependencies": {
     "deepmerge": "^4.3.1",
     "js-yaml": "^4.1.0"
-  }
+  },
+  "keywords": [
+    "i18n",
+    "i18next",
+    "plugins",
+    "react",
+    "vanilla-javascript",
+    "vue"
+  ]
 }
