@@ -11,7 +11,7 @@ interface Options {
 
 const defaults: Options = {
   dest: 'public/locales',
-  localeFile: 'local.yml',
+  localeFile: 'locale.yml',
 };
 
 export default (inOptions?: Options) => {
