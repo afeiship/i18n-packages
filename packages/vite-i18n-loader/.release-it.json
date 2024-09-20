@@ -3,9 +3,15 @@
     "requireCleanWorkingDir": false
   },
   "hooks": {
-    "after:init": ["npm run test", "t2k"],
-    "after:bump": ["npm run build"],
-    "after:release": ["npm pkg get name | cnpm sync"]
+    "after:init": [
+      "t2k"
+    ],
+    "after:bump": [
+      "npm run build"
+    ],
+    "after:release": [
+      "npm pkg get name | cnpm sync"
+    ]
   },
   "github": {
     "release": true,
