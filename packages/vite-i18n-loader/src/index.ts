@@ -1,29 +1,37 @@
 import { promises as fs, existsSync } from 'fs';
 import deepmerge from 'deepmerge';
-import yaml from 'js-yaml';
 import path from 'path';
 import nx from '@jswork/next';
-import { getFileId } from './utils';
+import { getFileId, loadContent, isLocalFile } from './utils';
 
 interface Options {
   dest?: string;
-  localeFile?: string;
+  localeFile?: string | string[];
 }
 
 const defaults: Options = {
   dest: 'public/locales',
-  localeFile: 'locale.yml',
+  localeFile: [
+    'locale.json',
+    'locale.yml',
+    'locale.yaml',
+    '*.locale.json',
+    '*.locale.yml',
+    '*.locale.yaml',
+  ],
 };
 
+export { getFileId, loadContent, isLocalFile };
+
 export default (inOptions?: Options) => {
-  const { dest, localeFile } = { ...defaults, ...inOptions };
+  const { dest, localeFile } = { ...defaults, ...inOptions } as Required<Options>;
 
   return {
     name: 'vite-i18n-loader',
     handleHotUpdate: async ({ file, server }) => {
-      if (file.endsWith(localeFile)) {
+      if (isLocalFile(file, localeFile)) {
         const MSG_INVALID_LOCALE_FILE = `[vite-i18n-loader] Invalid locale file: ${file}, languages not found.`;
-        const fileContent: any = yaml.load(await fs.readFile(file, 'utf8'));
+        const fileContent: any = await loadContent(file);
         let { id, languages } = fileContent;
         id = id || getFileId(file);
         if (!languages) return console.warn(MSG_INVALID_LOCALE_FILE);
@@ -38,7 +46,7 @@ export default (inOptions?: Options) => {
           }
 
           // merge old content and new content
-          const oldFileContent = JSON.parse(await fs.readFile(outputFilePath, 'utf-8'));
+          const oldFileContent = await loadContent(outputFilePath);
           const newContent = {};
           nx.set(newContent, id, value);
           const mergedContent = deepmerge(oldFileContent, newContent);

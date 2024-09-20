@@ -1,6 +1,6 @@
 import path from 'path';
 import yaml from 'js-yaml';
-import { promises as fs } from 'fs';
+import { promises as fs, existsSync } from 'fs';
 
 // /Users/ap7/aric-notes/i18next-notes/src/components/abc-comp/locale.yml -> 'components.abc-comp'
 export const getFileId = (file: string) => {
@@ -22,4 +22,18 @@ export const loadContent = async (file: string) => {
     default:
       throw new Error(`Unsupported file type: ${ext}`);
   }
+};
+
+// localFile: ['locale.json', 'locale.yml', 'locale.yaml', '*.locale.json', '*.locale.yml', '*.locale.yaml']
+export const isLocalFile = (filepath: string, localeFile: string | string[]): boolean => {
+  if (existsSync(filepath)) return false;
+  if (typeof localeFile === 'string') {
+    const _localeFile = localeFile.replace('*', '');
+    return filepath.endsWith(_localeFile);
+  }
+
+  if (Array.isArray(localeFile)) {
+    return localeFile.some((localeItem) => isLocalFile(filepath, localeItem));
+  }
+  return false;
 };
