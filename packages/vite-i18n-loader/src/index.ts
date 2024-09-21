@@ -2,7 +2,7 @@ import { promises as fs, existsSync } from 'fs';
 import deepmerge from 'deepmerge';
 import path from 'path';
 import nx from '@jswork/next';
-import sprintf from 'sprintf-js';
+import { sprintf } from 'sprintf-js';
 import { getFileId, loadContent, isLocalFile } from './utils';
 
 interface Options {
