@@ -4,6 +4,7 @@ import type { i18n as I18n } from 'i18next';
 import { InitOptions as I18nextInitOptions } from 'i18next';
 import { ReactNode } from 'react';
 import { ThirdPartyModule } from './shared';
+import useIntl from './use-intl';
 
 // modes
 import init4backend from './mode/init4backend';
@@ -74,7 +75,7 @@ const RawLocaleProvider = ({
   onInit!({ i18n, t });
 
   if (harmony && ctx) {
-    ctx.mix(ctx, { t, i18n, useIntl: useTranslation });
+    ctx.mix(ctx, { t, i18n, useIntl });
   }
 
   useEffect(() => {
