@@ -5,7 +5,7 @@ import { sprintf } from 'sprintf-js';
 
 export const getFileId = (file: string) => {
   const basedir = path.dirname(file);
-  const [_, idpath] = basedir.split('/src/');
+  const [_, idpath] = basedir.split('src/');
   return idpath.replace(/\//g, '.');
 };
 
@@ -25,13 +25,13 @@ export const loadContent = async (file: string) => {
 };
 
 // localFile: ['locale.json', 'locale.yml', 'locale.yaml', '*.locale.json', '*.locale.yml', '*.locale.yaml']
-export const isLocalFile = (filepath: string, localeFile: string | string[]): boolean => {
+export const isLocaleFile = (filepath: string, localeFile: string | string[]): boolean => {
   if (!existsSync(filepath)) return false;
   if (typeof localeFile === 'string') {
     const _localeFile = localeFile.replace('*', '');
     return filepath.endsWith(_localeFile);
   } else {
-    return localeFile.some((localeItem) => isLocalFile(filepath, localeItem));
+    return localeFile.some((localeItem) => isLocaleFile(filepath, localeItem));
   }
 };
 

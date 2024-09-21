@@ -1,0 +1,8 @@
+{
+  "common": {
+    "button": {
+      "ok": "Confirm",
+      "cancel": "Cancel"
+    }
+  }
+}

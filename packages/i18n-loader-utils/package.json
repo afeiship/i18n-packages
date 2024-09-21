@@ -1,12 +1,13 @@
 {
-  "name": "vite-i18next-loader",
-  "version": "1.0.19",
-  "description": "Vite plugin for i18n resources.",
+  "name": "@jswork/i18n-loader-utils",
+  "version": "1.0.0",
+  "description": "I18n loader utils.",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "global.d.ts"
   ],
   "scripts": {
     "build": "tsup",
@@ -15,32 +16,19 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@jswork/next": "^1.2.6",
+    "@jswork/next": "^1.2.2",
     "@swc/core": "^1.3.101",
     "@types/jest": "^29.5.12",
-    "@types/js-yaml": "^4.0.9",
     "@types/node": "^18.15.5",
     "tslib": "^2.6.2",
     "tsup": "^8.0.1",
-    "typescript": "^4.9.5",
-    "vite": "^5.4.7"
+    "typescript": "^4.9.5"
   },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
-  "peerDependencies": {
-    "@jswork/next": "*"
-  },
-  "keywords": [
-    "vite",
-    "plugin",
-    "react",
-    "vanilla-javascript"
-  ],
   "dependencies": {
-    "deepmerge": "^4.3.1",
-    "fast-glob": "^3.3.2",
     "js-yaml": "^4.1.0",
     "sprintf-js": "^1.1.3"
   }

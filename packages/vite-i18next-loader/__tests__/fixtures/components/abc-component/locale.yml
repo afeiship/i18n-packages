@@ -1,0 +1,11 @@
+# @email: <EMAIL>
+# @description: Sample description for the first i18n example component.
+# @updated_at: 2024-09-22 06:11:47
+
+languages:
+  zh-CN:
+    title: 组件名称
+    description: 第一个i18n示例组件
+  en-US:
+    title: Component Name
+    description: The first i18n example component
