@@ -2,6 +2,7 @@ import { promises as fs, existsSync } from 'fs';
 import deepmerge from 'deepmerge';
 import path from 'path';
 import nx from '@jswork/next';
+import sprintf from 'sprintf-js';
 import { getFileId, loadContent, isLocalFile } from './utils';
 
 interface Options {
@@ -34,6 +35,14 @@ const defaults: Options = {
   ],
 };
 
+const MSG_INVALID_LOCALE_FILE = `[vite-i18n-loader] Invalid locale file: %s, languages not found.`;
+const MSG_INVALID_ID = `[vite-i18n-loader] Invalid id in file: %s, id not work.`;
+const MSG_INVALID_LANGUAGE = `[vite-i18n-loader] Invalid language: %s, file: %s.`;
+const warn = (msgTmpl: string, ...args: any[]) => {
+  const msg = sprintf(msgTmpl, ...args);
+  console.warn(msg);
+};
+
 export default (inOptions?: Options) => {
   const { dest, languages, localePattern } = { ...defaults, ...inOptions } as Required<Options>;
 
@@ -41,18 +50,15 @@ export default (inOptions?: Options) => {
     name: 'vite-i18n-loader',
     handleHotUpdate: async ({ file, server }) => {
       if (isLocalFile(file, localePattern)) {
-        const MSG_INVALID_LOCALE_FILE = `[vite-i18n-loader] Invalid locale file: ${file}, languages not found.`;
-        const MSG_INVALID_ID = `[vite-i18n-loader] Invalid id in file: ${file}, id not work.`;
         const fileContent: any = await loadContent(file);
         let { id, languages } = fileContent;
         id = id || getFileId(file);
-        if (!languages) return console.warn(MSG_INVALID_LOCALE_FILE);
-        if (!id) return console.warn(MSG_INVALID_ID);
+        if (!languages) return warn(MSG_INVALID_LOCALE_FILE, file);
+        if (!id) return warn(MSG_INVALID_ID, file);
 
         nx.forIn(languages, async (lang, value) => {
           // check if language is valid
-          const MSG_INVALID_LANGUAGE = `[vite-i18n-loader] Invalid language: ${lang}, file: ${file}`;
-          if (!languages.includes(lang)) return console.warn(MSG_INVALID_LANGUAGE);
+          if (!languages.includes(lang)) return warn(MSG_INVALID_LANGUAGE, lang, file);
 
           // create dir if not exists
           const outputFilePath = path.resolve(dest!, `${lang}.json`);
