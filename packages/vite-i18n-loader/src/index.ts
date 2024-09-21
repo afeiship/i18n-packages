@@ -11,9 +11,10 @@ interface Options {
    */
   dest?: string;
   /**
-   * The languages to export.
+   * The supported languages.
+   * @default ['zh-CN', 'en-US', 'zh', 'en']
    */
-  languages?: string[];
+  supportedLanguages?: string[];
   /**
    * The file pattern for locales.
    * @default ['locale.json', 'locale.yml', 'locale.yaml', '*.locale.json', '*.locale.yml', '*.locale.yaml']
@@ -23,7 +24,7 @@ interface Options {
 
 const defaults: Options = {
   dest: 'public/locales',
-  languages: ['zh-CN', 'en-US', 'zh', 'en'],
+  supportedLanguages: ['zh-CN', 'en-US', 'zh', 'en'],
   localePattern: [
     'locale.json',
     'locale.yml',
@@ -39,7 +40,10 @@ const MSG_INVALID_ID = `[vite-i18n-loader] Invalid id in file: %s, id not work.`
 const MSG_INVALID_LANGUAGE = `[vite-i18n-loader] Invalid language: %s, file: %s.`;
 
 export default (inOptions?: Options) => {
-  const { dest, languages, localePattern } = { ...defaults, ...inOptions } as Required<Options>;
+  const { dest, supportedLanguages, localePattern } = {
+    ...defaults,
+    ...inOptions,
+  } as Required<Options>;
 
   return {
     name: 'vite-i18n-loader',
@@ -48,7 +52,7 @@ export default (inOptions?: Options) => {
         const fileContent: any = await loadContent(file);
         let { id, languages } = fileContent;
         id = id || getFileId(file);
-        if (!languages) return warn(MSG_INVALID_LOCALE_FILE, file);
+        if (!supportedLanguages) return warn(MSG_INVALID_LOCALE_FILE, file);
         if (!id) return warn(MSG_INVALID_ID, file);
 
         nx.forIn(languages, async (lang, value) => {
