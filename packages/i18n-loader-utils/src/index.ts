@@ -3,6 +3,8 @@ import yaml from 'js-yaml';
 import { promises as fs, existsSync } from 'fs';
 import { sprintf } from 'sprintf-js';
 
+// https://github.com/patak-dev/vite-plugin-virtual/blob/master/src/index.ts
+
 export const getFileId = (file: string) => {
   const basedir = path.dirname(file);
   const [_, idpath] = basedir.split('src/');
@@ -39,3 +41,17 @@ export const warn = (msgTmpl: string, ...args: any[]) => {
   const msg = sprintf(msgTmpl, ...args);
   console.warn(msg);
 };
+
+export function invalidateVirtualModule(server: any, virtualModuleId: string): void {
+  const { moduleGraph, ws } = server;
+  const module = moduleGraph.getModuleById(virtualModuleId);
+  if (module) {
+    moduleGraph.invalidateModule(module);
+    if (ws) {
+      ws.send({
+        type: 'full-reload',
+        path: '*',
+      });
+    }
+  }
+}
