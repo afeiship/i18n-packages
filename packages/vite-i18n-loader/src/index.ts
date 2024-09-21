@@ -11,6 +11,10 @@ interface Options {
    */
   dest?: string;
   /**
+   * The languages to export.
+   */
+  languages?: string[];
+  /**
    * The file pattern for locales.
    * @default ['locale.json', 'locale.yml', 'locale.yaml', '*.locale.json', '*.locale.yml', '*.locale.yaml']
    */
@@ -19,6 +23,7 @@ interface Options {
 
 const defaults: Options = {
   dest: 'public/locales',
+  languages: ['zh-CN', 'en-US', 'zh', 'en'],
   localePattern: [
     'locale.json',
     'locale.yml',
@@ -30,7 +35,7 @@ const defaults: Options = {
 };
 
 export default (inOptions?: Options) => {
-  const { dest, localePattern } = { ...defaults, ...inOptions } as Required<Options>;
+  const { dest, languages, localePattern } = { ...defaults, ...inOptions } as Required<Options>;
 
   return {
     name: 'vite-i18n-loader',
@@ -43,9 +48,12 @@ export default (inOptions?: Options) => {
         if (!languages) return console.warn(MSG_INVALID_LOCALE_FILE);
 
         nx.forIn(languages, async (lang, value) => {
-          const outputFilePath = path.resolve(dest!, `${lang}.json`);
+          // check if language is valid
+          const MSG_INVALID_LANGUAGE = `[vite-i18n-loader] Invalid language: ${lang}, file: ${file}`;
+          if (!languages.includes(lang)) return console.warn(MSG_INVALID_LANGUAGE);
 
           // create dir if not exists
+          const outputFilePath = path.resolve(dest!, `${lang}.json`);
           if (!existsSync(outputFilePath)) {
             await fs.mkdir(path.dirname(outputFilePath), { recursive: true });
             await fs.writeFile(outputFilePath, '{}', 'utf-8');
