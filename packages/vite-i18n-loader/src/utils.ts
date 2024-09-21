@@ -30,10 +30,7 @@ export const isLocalFile = (filepath: string, localeFile: string | string[]): bo
   if (typeof localeFile === 'string') {
     const _localeFile = localeFile.replace('*', '');
     return filepath.endsWith(_localeFile);
-  }
-
-  if (Array.isArray(localeFile)) {
+  } else {
     return localeFile.some((localeItem) => isLocalFile(filepath, localeItem));
   }
-  return false;
 };
