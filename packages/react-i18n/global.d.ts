@@ -7,5 +7,5 @@ interface NxStatic {
   useIntl: (
     keyPrefix?: string,
     options?: import('react-i18next').UseTranslationOptions
-  ) => import('react-i18next').UseTranslationResponse<TFunction>;
+  ) => import('react-i18next').UseTranslationResponse<any>;
 }
