@@ -68,7 +68,7 @@ const RawLocaleProvider = ({
 
   const { i18n, t } = useTranslation();
   const lang: string = i18n.language as keyof typeof locales;
-  const ctx = global['nx'];
+  const ctx = window['nx'];
 
   // onInit
   onInit!({ i18n, t });
