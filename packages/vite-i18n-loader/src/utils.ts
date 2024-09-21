@@ -26,7 +26,7 @@ export const loadContent = async (file: string) => {
 
 // localFile: ['locale.json', 'locale.yml', 'locale.yaml', '*.locale.json', '*.locale.yml', '*.locale.yaml']
 export const isLocalFile = (filepath: string, localeFile: string | string[]): boolean => {
-  if (existsSync(filepath)) return false;
+  if (!existsSync(filepath)) return false;
   if (typeof localeFile === 'string') {
     const _localeFile = localeFile.replace('*', '');
     return filepath.endsWith(_localeFile);
