@@ -52,12 +52,12 @@ export default (inOptions?: Options) => {
         const fileContent: any = await loadContent(file);
         let { id, languages } = fileContent;
         id = id || getFileId(file);
-        if (!supportedLanguages) return warn(MSG_INVALID_LOCALE_FILE, file);
+        if (!languages) return warn(MSG_INVALID_LOCALE_FILE, file);
         if (!id) return warn(MSG_INVALID_ID, file);
 
         nx.forIn(languages, async (lang, value) => {
           // check if language is valid
-          if (!languages.includes(lang)) return warn(MSG_INVALID_LANGUAGE, lang, file);
+          if (!supportedLanguages.includes(lang)) return warn(MSG_INVALID_LANGUAGE, lang, file);
 
           // create dir if not exists
           const outputFilePath = path.resolve(dest!, `${lang}.json`);
