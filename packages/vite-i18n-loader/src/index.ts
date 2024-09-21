@@ -42,10 +42,12 @@ export default (inOptions?: Options) => {
     handleHotUpdate: async ({ file, server }) => {
       if (isLocalFile(file, localePattern)) {
         const MSG_INVALID_LOCALE_FILE = `[vite-i18n-loader] Invalid locale file: ${file}, languages not found.`;
+        const MSG_INVALID_ID = `[vite-i18n-loader] Invalid id in file: ${file}, id not work.`;
         const fileContent: any = await loadContent(file);
         let { id, languages } = fileContent;
         id = id || getFileId(file);
         if (!languages) return console.warn(MSG_INVALID_LOCALE_FILE);
+        if (!id) return console.warn(MSG_INVALID_ID);
 
         nx.forIn(languages, async (lang, value) => {
           // check if language is valid
