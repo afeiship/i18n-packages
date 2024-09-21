@@ -8,7 +8,6 @@
   "typings": "dist/main.d.ts",
   "files": [
     "dist",
-    "src",
     "global.d.ts"
   ],
   "scripts": {
