@@ -2,7 +2,8 @@ import { promises as fs, existsSync } from 'fs';
 import deepmerge from 'deepmerge';
 import path from 'path';
 import nx from '@jswork/next';
-import { getFileId, loadContent, isLocalFile, warn } from './utils';
+import type { Plugin } from 'vite';
+import { getFileId, isLocaleFile, loadContent, warn } from '@jswork/i18n-loader-utils';
 
 interface Options {
   /**
@@ -48,7 +49,7 @@ export default (inOptions?: Options) => {
   return {
     name: 'vite-i18n-loader',
     handleHotUpdate: async ({ file, server }) => {
-      if (isLocalFile(file, localePattern)) {
+      if (isLocaleFile(file, localePattern)) {
         const fileContent: any = await loadContent(file);
         let { id, languages } = fileContent;
         id = id || getFileId(file);
@@ -80,5 +81,5 @@ export default (inOptions?: Options) => {
         });
       }
     },
-  };
+  } as Plugin;
 };

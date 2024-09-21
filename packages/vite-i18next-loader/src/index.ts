@@ -1,8 +1,8 @@
 import type { Plugin, ViteDevServer } from 'vite';
 import fg from 'fast-glob';
 import nx from '@jswork/next';
+import { getFileId, isLocaleFile, loadContent, warn } from '@jswork/i18n-loader-utils';
 import deepmerge from 'deepmerge';
-import { getFileId, isLocaleFile, loadContent, warn } from './utils';
 
 interface Options {
   /**

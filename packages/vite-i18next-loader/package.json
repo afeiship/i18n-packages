@@ -39,6 +39,7 @@
     "vanilla-javascript"
   ],
   "dependencies": {
+    "@jswork/i18n-loader-utils": "^1.0.1",
     "deepmerge": "^4.3.1",
     "fast-glob": "^3.3.2",
     "js-yaml": "^4.1.0",
