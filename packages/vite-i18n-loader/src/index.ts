@@ -29,8 +29,6 @@ const defaults: Options = {
   ],
 };
 
-export { getFileId, loadContent, isLocalFile };
-
 export default (inOptions?: Options) => {
   const { dest, localePattern } = { ...defaults, ...inOptions } as Required<Options>;
 
