@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useIntl } from '../../src/main';
 import styled from 'styled-components';
 import { Select, Space, Table, DatePicker, TimePicker, Avatar, Button, Modal } from 'antd';
-import nx from '@jswork/next';
+// import nx from '@jswork/next';
 
 const Container = styled.div`
   .ant-avatar {
@@ -20,8 +20,8 @@ export default () => {
   const [visible, setVisible] = useState<boolean>(false);
 
   // inject as global for debug
-  nx.t = t;
-  nx.i18n = i18n;
+  // nx.t = t;
+  // nx.i18n = i18n;
 
   const img = i18n.language === 'zh-CN' ? '5' : '1';
 
