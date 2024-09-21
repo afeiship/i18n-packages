@@ -13,14 +13,7 @@ npm install @jswork/i18n-loader-utils
 
 ## usage
 ```js
-import i18nLoaderUtils from '@jswork/i18n-loader-utils';
-
-// usage goes here.
-```
-
-## types
-```ts
-/// <reference types="@jswork/i18n-loader-utils/global.d.ts" />
+import { getFileId, loadContent, isLocaleFile, warn } from '@jswork/i18n-loader-utils';
 ```
 
 ## license
