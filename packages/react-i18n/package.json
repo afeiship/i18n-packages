@@ -1,7 +1,7 @@
 {
   "name": "@jswork/react-i18n",
   "homepage": "https://js.work",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "I18n for react project.",
   "license": "MIT",
   "main": "dist/index.js",
@@ -89,5 +89,13 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
-  }
+  },
+  "keywords": [
+    "i18n",
+    "i18next",
+    "plugins",
+    "react",
+    "vanilla-javascript",
+    "vue"
+  ]
 }
