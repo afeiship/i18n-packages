@@ -5,13 +5,21 @@ import nx from '@jswork/next';
 import { getFileId, loadContent, isLocalFile } from './utils';
 
 interface Options {
+  /**
+   * The output directory for locales.
+   * @default 'public/locales'
+   */
   dest?: string;
-  localeFile?: string | string[];
+  /**
+   * The file pattern for locales.
+   * @default ['locale.json', 'locale.yml', 'locale.yaml', '*.locale.json', '*.locale.yml', '*.locale.yaml']
+   */
+  localePattern?: string | string[];
 }
 
 const defaults: Options = {
   dest: 'public/locales',
-  localeFile: [
+  localePattern: [
     'locale.json',
     'locale.yml',
     'locale.yaml',
@@ -24,12 +32,12 @@ const defaults: Options = {
 export { getFileId, loadContent, isLocalFile };
 
 export default (inOptions?: Options) => {
-  const { dest, localeFile } = { ...defaults, ...inOptions } as Required<Options>;
+  const { dest, localePattern } = { ...defaults, ...inOptions } as Required<Options>;
 
   return {
     name: 'vite-i18n-loader',
     handleHotUpdate: async ({ file, server }) => {
-      if (isLocalFile(file, localeFile)) {
+      if (isLocalFile(file, localePattern)) {
         const MSG_INVALID_LOCALE_FILE = `[vite-i18n-loader] Invalid locale file: ${file}, languages not found.`;
         const fileContent: any = await loadContent(file);
         let { id, languages } = fileContent;
