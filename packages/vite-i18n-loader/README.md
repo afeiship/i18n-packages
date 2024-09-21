@@ -13,14 +13,17 @@ npm install @jswork/vite-i18n-loader
 
 ## usage
 ```js
-import viteI18nLoader from '@jswork/vite-i18n-loader';
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import i18nLoader from '@jswork/vite-i18n-loader';
 
-// usage goes here.
-```
-
-## types
-```ts
-/// <reference types="@jswork/vite-i18n-loader/global.d.ts" />
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react(), i18nLoader()],
+  server: {
+    host: '0.0.0.0'
+  }
+});
 ```
 
 ## license
