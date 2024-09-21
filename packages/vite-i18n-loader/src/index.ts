@@ -2,8 +2,7 @@ import { promises as fs, existsSync } from 'fs';
 import deepmerge from 'deepmerge';
 import path from 'path';
 import nx from '@jswork/next';
-import { sprintf } from 'sprintf-js';
-import { getFileId, loadContent, isLocalFile } from './utils';
+import { getFileId, loadContent, isLocalFile, warn } from './utils';
 
 interface Options {
   /**
@@ -38,10 +37,6 @@ const defaults: Options = {
 const MSG_INVALID_LOCALE_FILE = `[vite-i18n-loader] Invalid locale file: %s, languages not found.`;
 const MSG_INVALID_ID = `[vite-i18n-loader] Invalid id in file: %s, id not work.`;
 const MSG_INVALID_LANGUAGE = `[vite-i18n-loader] Invalid language: %s, file: %s.`;
-const warn = (msgTmpl: string, ...args: any[]) => {
-  const msg = sprintf(msgTmpl, ...args);
-  console.warn(msg);
-};
 
 export default (inOptions?: Options) => {
   const { dest, languages, localePattern } = { ...defaults, ...inOptions } as Required<Options>;

@@ -1,6 +1,7 @@
 import path from 'path';
 import yaml from 'js-yaml';
 import { promises as fs, existsSync } from 'fs';
+import { sprintf } from 'sprintf-js';
 
 // /Users/ap7/aric-notes/i18next-notes/src/components/abc-comp/locale.yml -> 'components.abc-comp'
 export const getFileId = (file: string) => {
@@ -33,4 +34,10 @@ export const isLocalFile = (filepath: string, localeFile: string | string[]): bo
   } else {
     return localeFile.some((localeItem) => isLocalFile(filepath, localeItem));
   }
+};
+
+
+export const warn = (msgTmpl: string, ...args: any[]) => {
+  const msg = sprintf(msgTmpl, ...args);
+  console.warn(msg);
 };
