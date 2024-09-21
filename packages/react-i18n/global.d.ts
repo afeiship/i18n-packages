@@ -4,5 +4,8 @@ type TFunction = (key: string, options?: any) => string;
 interface NxStatic {
   t: TFunction;
   i18n: import('i18next').i18n;
-  useIntl: (keyPrefix?: string, options?: import('react-i18next').UseTranslationOptions) => string;
+  useIntl: (
+    keyPrefix?: string,
+    options?: import('react-i18next').UseTranslationOptions
+  ) => import('react-i18next').UseTranslationResponse<TFunction>;
 }
