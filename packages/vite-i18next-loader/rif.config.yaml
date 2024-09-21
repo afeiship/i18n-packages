@@ -1,0 +1,14 @@
+name: replace-in-files
+files:
+  - 'src/**/*.ts'
+  - 'src/**/*.tsx'
+  - '.*'
+  - '*'
+  - '!node_modules'
+  - '!rif.config.yaml'
+replacements:
+  - from: /vite-plugin-description/g
+    to: Vite plugin for i18n resources.
+  - from: /vite-plugin/g
+    to: '${PROJECT_NAME}'
+
