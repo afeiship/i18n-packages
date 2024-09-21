@@ -7,7 +7,7 @@ import { sprintf } from 'sprintf-js';
 export const getFileId = (file: string) => {
   const basedir = path.dirname(file);
   const [_, idpath] = basedir.split('/src/');
-  return idpath.replace('/', '.');
+  return idpath.replace(/\//g, '.');
 };
 
 export const loadContent = async (file: string) => {
