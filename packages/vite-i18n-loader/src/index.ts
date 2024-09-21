@@ -71,7 +71,8 @@ export default (inOptions?: Options) => {
           const oldFileContent = await loadContent(outputFilePath);
           const newContent = {};
           nx.set(newContent, id, value);
-          const mergedContent = deepmerge(oldFileContent, newContent);
+          const mergedContent = deepmerge(oldFileContent, newContent) as Record<string, any>;
+          mergedContent.updated_at = new Date().toISOString();
           await fs.writeFile(outputFilePath, JSON.stringify(mergedContent, null, 2), 'utf-8');
 
           // trigger full reload to update client
