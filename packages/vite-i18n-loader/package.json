@@ -1,6 +1,6 @@
 {
   "name": "@jswork/vite-i18n-loader",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Another vite i18n loader.",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
