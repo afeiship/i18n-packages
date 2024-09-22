@@ -1,6 +1,6 @@
 {
   "name": "@jswork/vite-i18n-loader",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "Another vite i18n loader.",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
@@ -30,7 +30,7 @@
     "registry": "https://registry.npmjs.org"
   },
   "dependencies": {
-    "@jswork/i18n-loader-utils": "^1.0.4",
+    "@jswork/i18n-loader-utils": "^1.0.5",
     "deepmerge": "^4.3.1"
   },
   "peerDependencies": {
