@@ -3,13 +3,7 @@ import deepmerge from 'deepmerge';
 import path from 'path';
 import nx from '@jswork/next';
 import type { Plugin } from 'vite';
-import {
-  getFileId,
-  isLocaleFile,
-  loadContent,
-  warn,
-  getCurrentDatetime,
-} from '@jswork/i18n-loader-utils';
+import { getFileId, isLocaleFile, loadContent, warn } from '@jswork/i18n-loader-utils';
 
 interface Options {
   /**
@@ -87,7 +81,6 @@ export default (inOptions?: Options) => {
           const newContent = {};
           nx.set(newContent, id, value);
           const mergedContent = deepmerge(oldFileContent, newContent) as Record<string, any>;
-          mergedContent.updated_at = getCurrentDatetime();
           await fs.writeFile(outputFilePath, JSON.stringify(mergedContent, null, 2), 'utf-8');
 
           // trigger full reload to update client
