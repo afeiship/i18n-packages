@@ -62,22 +62,20 @@ const plugin = (inOptions?: Options) => {
   return {
     name: 'vite-i18next-loader',
     buildStart: async () => {
-      for (const pattern of include) {
-        const matchedFiles = await fg(pattern, { onlyFiles: true, absolute: true });
-        for (const file of matchedFiles) {
-          const fileId = getFileId(file);
-          const fileContent = await loadContent(file);
-          const { id, languages } = fileContent;
-          const _id = id || getFileId(file);
-          if (!languages) return warn(MSG_INVALID_LOCALE_FILE, file);
-          if (!_id) return warn(MSG_INVALID_ID, file);
-          for (const lang in languages) {
-            if (!supportedLanguages.includes(lang)) return warn(MSG_INVALID_LANGUAGE, lang, file);
-            const value = languages[lang];
-            const currentResource = {};
-            nx.set(currentResource, fileId, value);
-            resources = deepmerge(resources, { [lang]: { translation: currentResource } });
-          }
+      const matchedFiles = await fg(include, { onlyFiles: true, absolute: true });
+      for (const file of matchedFiles) {
+        const fileId = getFileId(file);
+        const fileContent = await loadContent(file);
+        const { id, languages } = fileContent;
+        const _id = id || getFileId(file);
+        if (!languages) return warn(MSG_INVALID_LOCALE_FILE, file);
+        if (!_id) return warn(MSG_INVALID_ID, file);
+        for (const lang in languages) {
+          if (!supportedLanguages.includes(lang)) return warn(MSG_INVALID_LANGUAGE, lang, file);
+          const value = languages[lang];
+          const currentResource = {};
+          nx.set(currentResource, fileId, value);
+          resources = deepmerge(resources, { [lang]: { translation: currentResource } });
         }
       }
     },
