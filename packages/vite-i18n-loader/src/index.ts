@@ -7,6 +7,11 @@ import { getFileId, isLocaleFile, loadContent, warn } from '@jswork/i18n-loader-
 
 interface Options {
   /**
+   * Show verbose logs.
+   * @default false
+   */
+  verbose?: boolean;
+  /**
    * The output directory for locales.
    * @default 'public/locales'
    */
@@ -35,21 +40,25 @@ const defaults: Options = {
     '*.locale.yaml',
   ],
 };
-
-const MSG_INVALID_LOCALE_FILE = `[vite-i18n-loader] Invalid locale file: %s, languages not found.`;
-const MSG_INVALID_ID = `[vite-i18n-loader] Invalid id in file: %s, id not work.`;
-const MSG_INVALID_LANGUAGE = `[vite-i18n-loader] Invalid language: %s, file: %s.`;
+const PLUGIN_NAME = 'vite-i18n-loader';
+const MSG_INVALID_LOCALE_FILE = `[${PLUGIN_NAME}] Invalid locale file: %s, languages not found.`;
+const MSG_INVALID_ID = `[${PLUGIN_NAME}] Invalid id in file: %s, id not work.`;
+const MSG_INVALID_LANGUAGE = `[${PLUGIN_NAME}] Invalid language: %s, file: %s.`;
 
 export default (inOptions?: Options) => {
-  const { dest, supportedLanguages, localePattern } = {
+  const { verbose, dest, supportedLanguages, localePattern } = {
     ...defaults,
     ...inOptions,
   } as Required<Options>;
+
+  const isVerbose = verbose || process.env.NODE_ENV === 'development';
 
   return {
     name: 'vite-i18n-loader',
     handleHotUpdate: async ({ file, server }) => {
       if (isLocaleFile(file, localePattern)) {
+        if (isVerbose) console.log(`[${PLUGIN_NAME}] hot update:`, file);
+
         const fileContent: any = await loadContent(file);
         let { id, languages } = fileContent;
         id = id || getFileId(file);
