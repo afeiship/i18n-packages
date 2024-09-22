@@ -42,12 +42,16 @@ export const warn = (msgTmpl: string, ...args: any[]) => {
   console.warn(msg);
 };
 
-export function invalidateVirtualModule(server: any, virtualModuleId: string): void {
+export function invalidateVirtualModule(
+  server: any,
+  virtualModuleId: string,
+  isReload: boolean = false
+): void {
   const { moduleGraph, ws } = server;
   const module = moduleGraph.getModuleById(virtualModuleId);
   if (module) {
     moduleGraph.invalidateModule(module);
-    if (ws) {
+    if (ws && isReload) {
       ws.send({
         type: 'full-reload',
         path: '*',

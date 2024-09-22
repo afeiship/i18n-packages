@@ -1,4 +1,4 @@
-import type { Plugin, ViteDevServer } from 'vite';
+import type { Plugin } from 'vite';
 import fg from 'fast-glob';
 import nx from '@jswork/next';
 import {
@@ -90,8 +90,7 @@ const plugin = (inOptions?: Options) => {
     handleHotUpdate: async ({ file, server }) => {
       if (isLocaleFile(file, localePattern)) {
         if (isVerbose) console.log(`[${PLUGIN_NAME}] hot update: ${file}`);
-        invalidateVirtualModule(server, VIRTUAL_ID);
-        server.ws.send({ type: 'full-reload' });
+        invalidateVirtualModule(server, VIRTUAL_ID, true);
       }
     },
   } as Plugin;
