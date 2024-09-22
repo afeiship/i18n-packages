@@ -6,6 +6,6 @@ interface NxStatic {
   i18n: import('i18next').i18n;
   useIntl: (
     keyPrefix?: string,
-    options?: import('react-i18next').UseTranslationOptions
+    options?: import('react-i18next').UseTranslationOptions<any>
   ) => import('react-i18next').UseTranslationResponse<any>;
 }
