@@ -1,7 +1,13 @@
 import type { Plugin, ViteDevServer } from 'vite';
 import fg from 'fast-glob';
 import nx from '@jswork/next';
-import { getFileId, isLocaleFile, loadContent, warn } from '@jswork/i18n-loader-utils';
+import {
+  getFileId,
+  isLocaleFile,
+  loadContent,
+  warn,
+  invalidateVirtualModule,
+} from '@jswork/i18n-loader-utils';
 import deepmerge from 'deepmerge';
 
 interface Options {
@@ -46,13 +52,6 @@ const MSG_INVALID_LOCALE_FILE = `[${PLUGIN_NAME}] Invalid locale file: %s, langu
 const MSG_INVALID_ID = `[${PLUGIN_NAME}] Invalid id in file: %s, id not work.`;
 const MSG_INVALID_LANGUAGE = `[vite-i18n-loader] Invalid language: %s, file: %s.`;
 
-const notifyUpdate = (server: ViteDevServer) => {
-  const virtualModule = server.moduleGraph.getModuleById(VIRTUAL_ID);
-  if (virtualModule) {
-    server.moduleGraph.invalidateModule(virtualModule);
-  }
-};
-
 const plugin = (inOptions?: Options) => {
   const options = { ...defaults, ...inOptions } as Required<Options>;
   const { verbose, include, supportedLanguages, localePattern } = options;
@@ -93,7 +92,7 @@ const plugin = (inOptions?: Options) => {
     handleHotUpdate: async ({ file, server }) => {
       if (isLocaleFile(file, localePattern)) {
         if (isVerbose) console.log(`[${PLUGIN_NAME}] hot update: ${file}`);
-        notifyUpdate(server);
+        invalidateVirtualModule(server, VIRTUAL_ID);
         server.ws.send({ type: 'full-reload' });
       }
     },
