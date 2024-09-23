@@ -3,6 +3,7 @@ import deepmerge from 'deepmerge';
 import path from 'path';
 import nx from '@jswork/next';
 import type { Plugin } from 'vite';
+import compact from 'deep-compact';
 import { getFileId, isLocaleFile, loadContent, warn } from '@jswork/i18n-loader-utils';
 
 interface Options {
@@ -26,9 +27,14 @@ interface Options {
    * @default ['locale.json', 'locale.yml', 'locale.yaml', '*.locale.json', '*.locale.yml', '*.locale.yaml']
    */
   localePattern?: string | string[];
+  /**
+   * Whether to keep nil values in the merged locales.
+   */
+  keepNilValues?: boolean;
 }
 
 const defaults: Options = {
+  keepNilValues: false,
   dest: 'public/locales',
   supportedLanguages: ['zh-CN', 'en-US', 'zh', 'en'],
   localePattern: [
@@ -46,7 +52,7 @@ const MSG_INVALID_ID = `[${PLUGIN_NAME}] Invalid id in file: %s, id not work.`;
 const MSG_INVALID_LANGUAGE = `[${PLUGIN_NAME}] Invalid language: %s, file: %s.`;
 
 export default (inOptions?: Options) => {
-  const { verbose, dest, supportedLanguages, localePattern } = {
+  const { keepNilValues, verbose, dest, supportedLanguages, localePattern } = {
     ...defaults,
     ...inOptions,
   } as Required<Options>;
@@ -66,6 +72,7 @@ export default (inOptions?: Options) => {
         if (!id) return warn(MSG_INVALID_ID, file);
 
         nx.forIn(languages, async (lang, value) => {
+          const _value = keepNilValues ? value : compact(value);
           // check if language is valid
           if (!supportedLanguages.includes(lang)) return warn(MSG_INVALID_LANGUAGE, lang, file);
 
@@ -79,7 +86,7 @@ export default (inOptions?: Options) => {
           // merge old content and new content
           const oldFileContent = await loadContent(outputFilePath);
           const newContent = {};
-          nx.set(newContent, id, value);
+          nx.set(newContent, id, _value);
           const mergedContent = deepmerge(oldFileContent, newContent) as Record<string, any>;
           await fs.writeFile(outputFilePath, JSON.stringify(mergedContent, null, 2), 'utf-8');
 

@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@jswork/i18n-loader-utils": "^1.0.6",
+    "deep-compact": "^1.1.0",
     "deepmerge": "^4.3.1"
   },
   "peerDependencies": {
