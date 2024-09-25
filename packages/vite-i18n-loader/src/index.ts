@@ -45,6 +45,7 @@ const PLUGIN_NAME = 'vite-i18n-loader';
 const MSG_INVALID_LOCALE_FILE = `[${PLUGIN_NAME}] Invalid locale file: %s, languages not found.`;
 const MSG_INVALID_ID = `[${PLUGIN_NAME}] Invalid id in file: %s, id not work.`;
 const MSG_INVALID_LANGUAGE = `[${PLUGIN_NAME}] Invalid language: %s, file: %s.`;
+const overwriteMerge = (oldArray, newArray, options) => newArray;
 
 export default (inOptions?: Options) => {
   const { verbose, dest, supportedLanguages, localePattern } = {
@@ -82,7 +83,9 @@ export default (inOptions?: Options) => {
           const oldFileContent = await loadContent(outputFilePath);
           const newContent = {};
           nx.set(newContent, id, _value);
-          const mergedContent = deepmerge(oldFileContent, newContent) as Record<string, any>;
+          const mergedContent = deepmerge(oldFileContent, newContent, {
+            arrayMerge: overwriteMerge,
+          }) as Record<string, any>;
           await fs.writeFile(outputFilePath, JSON.stringify(mergedContent, null, 2), 'utf-8');
 
           // trigger full reload to update client
