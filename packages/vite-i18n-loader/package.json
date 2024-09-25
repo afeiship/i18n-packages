@@ -31,8 +31,8 @@
   },
   "dependencies": {
     "@jswork/i18n-loader-utils": "^1.0.6",
-    "deep-compact": "^1.1.0",
-    "deepmerge": "^4.3.1"
+    "@jswork/next-deep-assign": "^1.0.4",
+    "deep-compact": "^1.1.0"
   },
   "peerDependencies": {
     "@jswork/next": "*"

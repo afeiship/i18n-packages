@@ -1,10 +1,10 @@
 import { promises as fs, existsSync } from 'fs';
-import deepmerge from 'deepmerge';
 import path from 'path';
 import nx from '@jswork/next';
 import type { Plugin } from 'vite';
 import compact from 'deep-compact';
 import { getFileId, isLocaleFile, loadContent, warn } from '@jswork/i18n-loader-utils';
+import '@jswork/next-deep-assign';
 
 interface Options {
   /**
@@ -83,9 +83,7 @@ export default (inOptions?: Options) => {
           const oldFileContent = await loadContent(outputFilePath);
           const newContent = {};
           nx.set(newContent, id, _value);
-          const mergedContent = deepmerge(oldFileContent, newContent, {
-            arrayMerge: overwriteMerge,
-          }) as Record<string, any>;
+          const mergedContent = nx.deepAssign(oldFileContent, newContent) as Record<string, any>;
           await fs.writeFile(outputFilePath, JSON.stringify(mergedContent, null, 2), 'utf-8');
 
           // trigger full reload to update client
