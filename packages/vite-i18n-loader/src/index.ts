@@ -29,6 +29,14 @@ interface Options {
   localePattern?: string | string[];
 }
 
+interface YamlSchema {
+  id?: string;
+  mode?: 'merge' | 'yaml-first';
+  languages: Record<string, any>;
+}
+
+type AnyObject = Record<string, any>;
+
 const defaults: Options = {
   dest: 'public/locales',
   supportedLanguages: ['zh-CN', 'en-US', 'zh', 'en'],
@@ -45,7 +53,14 @@ const PLUGIN_NAME = 'vite-i18n-loader';
 const MSG_INVALID_LOCALE_FILE = `[${PLUGIN_NAME}] Invalid locale file: %s, languages not found.`;
 const MSG_INVALID_ID = `[${PLUGIN_NAME}] Invalid id in file: %s, id not work.`;
 const MSG_INVALID_LANGUAGE = `[${PLUGIN_NAME}] Invalid language: %s, file: %s.`;
-const overwriteMerge = (oldArray, newArray, options) => newArray;
+const mergeContent = (
+  oldContent: AnyObject,
+  newContent: AnyObject,
+  mode: YamlSchema['mode'] = 'merge'
+): AnyObject => {
+  if (mode === 'merge') return nx.deepAssign(oldContent, newContent) as AnyObject;
+  return newContent;
+};
 
 export default (inOptions?: Options) => {
   const { verbose, dest, supportedLanguages, localePattern } = {
@@ -62,7 +77,7 @@ export default (inOptions?: Options) => {
         if (isVerbose) console.log(`[${PLUGIN_NAME}] hot update:`, file);
 
         const fileContent: any = await loadContent(file);
-        let { id, languages } = fileContent;
+        let { id, languages, mode } = fileContent as YamlSchema;
         id = id || getFileId(file);
         if (!languages) return warn(MSG_INVALID_LOCALE_FILE, file);
         if (!id) return warn(MSG_INVALID_ID, file);
@@ -82,14 +97,12 @@ export default (inOptions?: Options) => {
           // merge old content and new content
           const oldFileContent = await loadContent(outputFilePath);
           const newContent = {};
-          nx.set(newContent, id, _value);
-          const mergedContent = nx.deepAssign(oldFileContent, newContent) as Record<string, any>;
+          nx.set(newContent, id!, _value);
+          const mergedContent = mergeContent(oldFileContent, newContent, mode);
           await fs.writeFile(outputFilePath, JSON.stringify(mergedContent, null, 2), 'utf-8');
 
           // trigger full reload to update client
-          server.ws.send({
-            type: 'full-reload',
-          });
+          server.ws.send({ type: 'full-reload' });
         });
       }
     },
