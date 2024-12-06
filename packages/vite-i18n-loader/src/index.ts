@@ -100,7 +100,7 @@ export default (inOptions?: Options) => {
           const newContent = nx.set({}, _id, _value);
           const oldContent = nx.get(fileContent, _id);
           const calculatedContent = getCalcContent(oldContent, newContent, mode);
-          nx.mix(fileContent, _id, calculatedContent)
+          nx.mix(fileContent, calculatedContent)
           await fs.writeFile(outputFilePath, JSON.stringify(fileContent, null, 2), 'utf-8');
 
           // trigger full reload to update client
