@@ -81,7 +81,7 @@ export default (inOptions?: Options) => {
         const _id = id || getFileId(file);
 
         if (!languages) return warn(MSG_INVALID_LOCALE_FILE, file);
-        if (!id) return warn(MSG_INVALID_ID, file);
+        if (!_id) return warn(MSG_INVALID_ID, file);
 
         nx.forIn(languages, async (lang, value) => {
           const _value = compact(value);
