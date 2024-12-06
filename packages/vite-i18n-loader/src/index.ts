@@ -53,13 +53,13 @@ const PLUGIN_NAME = 'vite-i18n-loader';
 const MSG_INVALID_LOCALE_FILE = `[${PLUGIN_NAME}] Invalid locale file: %s, languages not found.`;
 const MSG_INVALID_ID = `[${PLUGIN_NAME}] Invalid id in file: %s, id not work.`;
 const MSG_INVALID_LANGUAGE = `[${PLUGIN_NAME}] Invalid language: %s, file: %s.`;
-const mergeContent = (
-  oldContent: AnyObject,
-  newContent: AnyObject,
-  mode: YamlSchema['mode'] = 'merge'
-): AnyObject => {
-  if (mode === 'merge') return nx.deepAssign(oldContent, newContent) as AnyObject;
-  return newContent;
+
+const getCalcContent = (oldContent: AnyObject, newContent: AnyObject, mode: YamlSchema['mode']) => {
+  if (mode === 'yaml-first') {
+    return newContent;
+  } else {
+    return nx.deepAssign(oldContent, newContent);
+  }
 };
 
 export default (inOptions?: Options) => {
@@ -78,7 +78,8 @@ export default (inOptions?: Options) => {
 
         const fileContent: any = await loadContent(file);
         let { id, languages, mode } = fileContent as YamlSchema;
-        id = id || getFileId(file);
+        const _id = id || getFileId(file);
+
         if (!languages) return warn(MSG_INVALID_LOCALE_FILE, file);
         if (!id) return warn(MSG_INVALID_ID, file);
 
@@ -96,9 +97,10 @@ export default (inOptions?: Options) => {
 
           // merge old content and new content
           const oldFileContent = await loadContent(outputFilePath);
-          const newContent = {};
-          nx.set(newContent, id!, _value);
-          const mergedContent = mergeContent(oldFileContent, newContent, mode);
+          const newContent = nx.set({}, _id, _value);
+          const oldContent = nx.get(oldFileContent, _id);
+          const calculatedContent = getCalcContent(oldContent, newContent, mode);
+          const mergedContent = nx.deepAssign(oldFileContent, calculatedContent) as AnyObject;
           await fs.writeFile(outputFilePath, JSON.stringify(mergedContent, null, 2), 'utf-8');
 
           // trigger full reload to update client
