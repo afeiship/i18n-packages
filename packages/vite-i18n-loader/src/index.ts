@@ -96,12 +96,12 @@ export default (inOptions?: Options) => {
           }
 
           // merge old content and new content
-          const oldFileContent = await loadContent(outputFilePath);
+          const fileContent = await loadContent(outputFilePath);
           const newContent = nx.set({}, _id, _value);
-          const oldContent = nx.get(oldFileContent, _id);
+          const oldContent = nx.get(fileContent, _id);
           const calculatedContent = getCalcContent(oldContent, newContent, mode);
-          const mergedContent = nx.deepAssign(oldFileContent, calculatedContent) as AnyObject;
-          await fs.writeFile(outputFilePath, JSON.stringify(mergedContent, null, 2), 'utf-8');
+          nx.set(fileContent, _id, calculatedContent)
+          await fs.writeFile(outputFilePath, JSON.stringify(fileContent, null, 2), 'utf-8');
 
           // trigger full reload to update client
           server.ws.send({ type: 'full-reload' });
