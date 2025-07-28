@@ -7,6 +7,7 @@ import { Locale } from 'antd/es/locale-provider';
 import { ConfigProviderProps } from 'antd/es/config-provider';
 import { ReactNode } from 'react';
 import { ThirdPartyModule } from './shared';
+import useIntl from './use-intl';
 
 // modes
 import init4backend from './mode/init4backend';
@@ -83,7 +84,7 @@ const LocaleProvider = ({
 
   if (harmony && ctx) {
     ctx?.mix(ctx, { t, i18n });
-    ctx.$useIntl = useTranslation;
+    ctx.useIntl = useIntl;
   }
 
   // Only low version antd need this
