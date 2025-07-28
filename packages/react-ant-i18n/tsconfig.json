@@ -26,13 +26,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "skipLibCheck": true,
-    "importHelpers": true,
-    "baseUrl": ".",
-    "paths": {
-      "tslib": [
-        "../node_modules/tslib/tslib.d.ts"
-      ]
-    },
+    "importHelpers": true
   },
   "include": [
     "src",
