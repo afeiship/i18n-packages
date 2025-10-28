@@ -80,7 +80,6 @@ const RawLocaleProvider = (props: LocaleProviderProps) => {
   const lang: string = i18n.language as keyof typeof locales;
   const ctx = window['nx'];
 
-  // onInit
   onInit!({ i18n, t });
 
   if (harmony && ctx) {
