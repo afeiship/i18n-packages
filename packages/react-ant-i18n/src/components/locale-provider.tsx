@@ -26,7 +26,7 @@ interface OnInitCallbackOptions {
   t: TFunction;
 }
 
-const locales = { 'en-US': enUS, 'zh-CN': zhCN, 'ru-RU': ruRU };
+const locales = { 'en-US': enUS, 'zh-CN': zhCN, 'ru-RU': ruRU } as const;
 const momentHook = { 'ru-RU': 'ru' };
 
 let initialized = false;
