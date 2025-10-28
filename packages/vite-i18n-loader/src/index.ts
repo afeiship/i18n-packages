@@ -31,11 +31,8 @@ interface Options {
 
 interface YamlSchema {
   id?: string;
-  mode?: 'merge' | 'yaml-first';
   languages: Record<string, any>;
 }
-
-type AnyObject = Record<string, any>;
 
 const defaults: Options = {
   dest: 'public/locales',
@@ -54,14 +51,6 @@ const MSG_INVALID_LOCALE_FILE = `[${PLUGIN_NAME}] Invalid locale file: %s, langu
 const MSG_INVALID_ID = `[${PLUGIN_NAME}] Invalid id in file: %s, id not work.`;
 const MSG_INVALID_LANGUAGE = `[${PLUGIN_NAME}] Invalid language: %s, file: %s.`;
 
-const getCalcContent = (oldContent: AnyObject, newContent: AnyObject, mode: YamlSchema['mode']) => {
-  if (mode === 'yaml-first') {
-    return newContent;
-  } else {
-    return nx.deepAssign(oldContent, newContent);
-  }
-};
-
 export default (inOptions?: Options) => {
   const { verbose, dest, supportedLanguages, localePattern } = {
     ...defaults,
@@ -77,7 +66,7 @@ export default (inOptions?: Options) => {
         if (isVerbose) console.log(`[${PLUGIN_NAME}] hot update:`, file);
 
         const fileContent: any = await loadContent(file);
-        let { id, languages, mode } = fileContent as YamlSchema;
+        let { id, languages } = fileContent as YamlSchema;
         const _id = id || getFileId(file);
 
         if (!languages) return warn(MSG_INVALID_LOCALE_FILE, file);
@@ -99,7 +88,7 @@ export default (inOptions?: Options) => {
           const fileContent = await loadContent(outputFilePath);
           const newContent = nx.set({}, _id, _value);
           const oldContent = nx.get(fileContent, _id);
-          const calculatedContent = getCalcContent(oldContent, newContent, mode);
+          const calculatedContent = nx.deepAssign(oldContent, newContent);
           const calculatedValue = nx.get(calculatedContent, _id);
           nx.set(fileContent, _id, calculatedValue);
 
