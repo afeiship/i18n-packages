@@ -47,19 +47,31 @@ type LocaleProviderProps = {
   };
 } & ConfigProviderProps;
 
-const LocaleProvider = ({
-  children,
+const defaultProps: Partial<LocaleProviderProps> = {
+  mode: 'backend',
+  moment: null,
   locales,
-  mode,
-  harmony,
-  moment,
-  routerType,
-  options,
-  plugins,
-  onInit,
-  onLanguageChanged,
-  ...props
-}: LocaleProviderProps) => {
+  routerType: 'hash',
+  harmony: false,
+  onInit: (_: OnInitCallbackOptions) => {},
+  onLanguageChanged: () => {}
+};
+
+const LocaleProvider = (props: LocaleProviderProps) => {
+  const {
+    children,
+    locales,
+    mode,
+    harmony,
+    moment,
+    routerType,
+    options,
+    plugins,
+    onInit,
+    onLanguageChanged,
+    ...rest
+  } = { ...defaultProps, ...props };
+
   const computedOptions = { routerType, ...options };
 
   if (!initialized) {
@@ -80,7 +92,7 @@ const LocaleProvider = ({
   const { i18n, t } = useTranslation();
   const lang: string = i18n.language as keyof typeof locales;
   const lowerLocale = momentHook[lang] || lang.toLowerCase();
-  const ctx:any = typeof nx !== 'undefined' ? nx: null;
+  const ctx: any = typeof nx !== 'undefined' ? nx : null;
 
   if (harmony && ctx) {
     ctx?.mix(ctx, { t, i18n });
@@ -103,20 +115,10 @@ const LocaleProvider = ({
   }, []);
 
   return (
-    <ConfigProvider locale={locales![lang]} {...props}>
+    <ConfigProvider locale={locales![lang]} {...rest}>
       {children}
     </ConfigProvider>
   );
-};
-
-LocaleProvider.defaultProps = {
-  mode: 'backend',
-  moment: null,
-  locales,
-  routerType: 'hash',
-  harmony: false,
-  onInit: (_: OnInitCallbackOptions) => {},
-  onLanguageChanged: () => {}
 };
 
 export default LocaleProvider;
