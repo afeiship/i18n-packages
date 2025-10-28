@@ -26,6 +26,7 @@ interface OnInitCallbackOptions {
 let initialized = false;
 
 type INIT_MODE = 'backend' | 'memory' | null;
+
 type LocaleProviderProps = {
   children: ReactNode;
   mode?: INIT_MODE;
@@ -40,18 +41,26 @@ type LocaleProviderProps = {
   };
 };
 
-const RawLocaleProvider = ({
-  children,
-  locales,
-  mode,
-  routerType,
-  harmony,
-  options,
-  plugins,
-  onInit,
-  onLanguageChanged,
-  ...props
-}: LocaleProviderProps) => {
+const defaultProps: Partial<LocaleProviderProps> = {
+  mode: 'backend',
+  routerType: 'hash',
+  onInit: (_: OnInitCallbackOptions) => {},
+  onLanguageChanged: () => {}
+};
+
+const RawLocaleProvider = (props: LocaleProviderProps) => {
+  const {
+    children,
+    locales,
+    mode,
+    routerType,
+    harmony,
+    options,
+    plugins,
+    onInit,
+    onLanguageChanged,
+    ...rest
+  } = { ...defaultProps, ...props };
   if (!initialized) {
     const computedOptions = { routerType, ...options };
     switch (mode) {
@@ -88,17 +97,10 @@ const RawLocaleProvider = ({
   }, []);
 
   return (
-    <LocalContext.Provider value={lang} {...props}>
+    <LocalContext.Provider value={lang} {...rest}>
       {children}
     </LocalContext.Provider>
   );
-};
-
-RawLocaleProvider.defaultProps = {
-  mode: 'backend',
-  routerType: 'hash',
-  onInit: (_: OnInitCallbackOptions) => {},
-  onLanguageChanged: () => {}
 };
 
 export default RawLocaleProvider;
