@@ -1,6 +1,6 @@
 {
   "name": "@jswork/i18n-helper",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "I18n helper.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

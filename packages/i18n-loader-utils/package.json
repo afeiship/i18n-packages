@@ -1,6 +1,6 @@
 {
   "name": "@jswork/i18n-loader-utils",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "I18n loader utils.",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
